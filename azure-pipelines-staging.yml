@@ -1,0 +1,99 @@
+trigger:
+  - main
+
+pool:
+  name: Default # Custom self hosted pool
+  vmImage: 'windows-latest'
+
+variables:
+  - name: websiteName
+    value: 'admin-staging.scrapdoor.com'
+  - name: appPoolName
+    value: 'admin-staging.scrapdoor.com'
+  
+stages:
+- stage: Build
+  displayName: 'Build React App'
+  jobs:
+  - job: Build
+    displayName: 'Build Job'
+    steps:
+    - task: NodeTool@0
+      inputs:
+        versionSpec: '22.x'  # Ensure this matches your Node.js version
+      displayName: 'Install Node.js'
+
+    - powershell: |
+        Write-Host "Current working directory:"
+        Get-Location
+        Write-Host "Listing files before build:"
+        Get-ChildItem -Path . -Recurse
+        
+        Write-Host "Installing dependencies..."
+        npm install
+        
+        Write-Host "Running build..."
+        npm run build
+        
+        Write-Host "Listing files after build:"
+        Get-ChildItem -Path . -Recurse
+      displayName: 'Install Dependencies & Build React App'
+
+    - powershell: |
+        Compress-Archive -Path "$(System.DefaultWorkingDirectory)\build\*" -DestinationPath "$(Build.ArtifactStagingDirectory)\scrap-admin-react-app.zip" -Force
+      displayName: 'Package React App as ZIP'
+
+    - task: PublishBuildArtifacts@1
+      inputs:
+        pathToPublish: '$(Build.ArtifactStagingDirectory)\scrap-admin-react-app.zip'
+        artifactName: 'drop'
+      displayName: 'Publish Build Artifacts'
+
+- stage: Release
+  displayName: 'Release'
+  dependsOn: Build
+  condition: succeeded()
+  jobs:
+  - deployment: Dev2
+    displayName: 'IIS Host & Deploy'
+    environment:
+      name: 'Dev2'    
+      resourceType: VirtualMachine
+    variables:
+    - name: websitePhysicalPath
+      value: '%SystemDrive%\inetpub\wwwroot\$(websiteName)'
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - task: IISWebAppManagementOnMachineGroup@0
+            inputs:            
+              IISDeploymentType: 'IISWebsite'
+              ActionIISWebsite: 'CreateOrUpdateWebsite'
+              WebsiteName: '$(websiteName)'
+              WebsitePhysicalPath: '$(websitePhysicalPath)'
+              WebsitePhysicalPathAuth: 'WebsiteUserPassThrough'
+              CreateOrUpdateAppPoolForWebsite: true
+              AppPoolNameForWebsite: '$(appPoolName)'
+              DotNetVersionForWebsite: 'No Managed Code'
+              PipeLineModeForWebsite: 'Integrated'
+              AppPoolIdentityForWebsite: 'ApplicationPoolIdentity'
+              AddBinding: true
+              Bindings: |
+                  {
+                      bindings:[
+                          {
+                              "protocol":"http",
+                              "ipAddress":"118.139.165.164",
+                              "port":"8006",
+                              "sslThumbprint":"",
+                              "sniFlag":false
+                          }
+                      ]
+                  }
+
+          - task: IISWebAppDeploymentOnMachineGroup@0
+            inputs:
+              WebSiteName: '$(websiteName)'
+              TakeAppOfflineFlag: true
+              Package: '$(Pipeline.Workspace)/drop/scrap-admin-react-app.zip'
