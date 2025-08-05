@@ -2,7 +2,7 @@ import axiosInstance from "../axiosInstance";
 
 const vehicleService = {
   getAllDriver:() => {
-    return axiosInstance.get(`/Vehicle/GetAllAsync`);
+    return axiosInstance.get(`/Vehicle/GetAll`);
   },
   getVehicleList: (page, size) => {
     return axiosInstance.get(`/Vehicle?PageNumber=${page}&PageSize=${size}`);

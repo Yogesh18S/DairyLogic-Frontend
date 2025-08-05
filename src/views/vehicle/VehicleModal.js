@@ -26,25 +26,12 @@ const VehicleModal = ({ visible, onClose, onSave, formData, setFormData, editMod
       </CModalHeader>
       <CModalBody>
         <CForm>
-          <CFormInput
-            label="Registration Number"
-            name="registrationNumber"
-            value={formData.registrationNumber}
+           <CFormInput
+            label="Vehicle Number"
+            name="vehicleNo"
+            value={formData.vehicleNo}
             onChange={handleChange}
             required
-          />
-          <CFormInput
-            label="Model"
-            name="model"
-            value={formData.model}
-            onChange={handleChange}
-            required
-          />
-          <CFormInput
-            label="Description"
-            name="description"
-            value={formData.description}
-            onChange={handleChange}
           />
           <CFormSwitch
             label="Active"

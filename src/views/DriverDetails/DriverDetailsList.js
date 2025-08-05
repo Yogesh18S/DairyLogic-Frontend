@@ -6,16 +6,19 @@ import {
   CCardBody,
   CCardHeader,
   CCol,
-  CRow,
+  CRow
 } from '@coreui/react'
 import { useEffect, useState } from 'react'
 import AppLoadingSpinner from '../../components/AppLoadingSpinner'
 import AppPaginatedTable from '../../components/table/AppPaginatedTable'
 import { ITEMS_PER_PAGE } from '../../constants/globalConstants'
+import driverDetailsService from '../../services/driverDetailsService'
 import vehicleService from '../../services/vehicleService'
-import VehicleModal from './VehicleModal'
+import routeService from '../../services/routeService'
+import driverService from '../../services/driverService'
+import DriverDetailsModal from './DriverDetailsModal'
 
-const VehicleList = () => {
+const DriverDetailsList = () => {
   const [data, setData] = useState([])
   const [currentPage, setCurrentPage] = useState(1)
   const [totalRecords, setTotalRecords] = useState(0)
@@ -23,22 +26,21 @@ const VehicleList = () => {
   const [error, setError] = useState(null)
   const [modalVisible, setModalVisible] = useState(false)
   const [editMode, setEditMode] = useState(false)
+  const [vehicles, setVehicles] = useState([])
+  const [routes, setRoutes] = useState([])
+  const [drivers, setDrivers] = useState([])
   const [formData, setFormData] = useState({
     id: '',
-    registrationNumber: '',
-    model: '',
-    description: '',
-    isActive: true
+    vehicleId: '',
+    routeId: '',
+    userId: ''
   })
 
   const fetchData = async () => {
     try {
-      const response = await vehicleService.getVehicleList(currentPage, ITEMS_PER_PAGE)
-      const formattedData = response.data.result.map(vehicle => ({
-        ...vehicle,
-        isActive: vehicle.isActive ? 'Active' : 'Inactive'
-      }))
-      setData(formattedData)
+      const response = await driverDetailsService.getDriverDetails(currentPage, ITEMS_PER_PAGE)
+      console.log(response)
+      setData(response.data.result)
       setTotalRecords(response.data.pagedListMetadata.totalRecords)
     } catch (error) {
       console.error('API request failed', error)
@@ -48,37 +50,62 @@ const VehicleList = () => {
     }
   }
 
+  const fetchDropdownData = async () => {
+    try {
+      const [vehiclesRes, routesRes, driversRes] = await Promise.all([
+        vehicleService.getAllDriver(),
+        routeService.getAllRouteList(),
+        driverService.getAllDriverList()
+      ])
+      setVehicles(vehiclesRes.data.result);
+      setRoutes(routesRes.data.result)
+      setDrivers(driversRes.data.result)
+    } catch (error) {
+      console.error('Failed to fetch dropdown data', error)
+      setError('Failed to load dropdown data.')
+    }
+  }
+
   const handleCreateNew = () => {
-    setFormData({ id: '', registrationNumber: '', model: '', description: '', isActive: true })
+    setFormData({
+      id: '',
+      vehicleId: '',
+      routeId: '',
+      userId: ''
+    })
     setEditMode(false)
     setModalVisible(true)
   }
 
   const handleEdit = (id) => {
-    const itemToEdit = data.find(item => item.id === id)
-    const isActiveBool = itemToEdit.isActive === 'Active'
-    setFormData({ ...itemToEdit, isActive: isActiveBool })
+    const itemToEdit = data.find((item) => item.id === id)
+    setFormData({
+      id: itemToEdit.id,
+      vehicleId: itemToEdit.vehicleId,
+      routeId: itemToEdit.routeId,
+      userId: itemToEdit.userId
+    })
     setEditMode(true)
     setModalVisible(true)
   }
 
   const handleDelete = async (id) => {
-    if (!window.confirm('Are you sure you want to delete this vehicle?')) return
+    if (!window.confirm('Are you sure you want to delete this driver detail?')) return
     try {
-      await vehicleService.deleteVehicle(id)
+      await driverDetailsService.deleteDriverDetails(id)
       fetchData()
     } catch (error) {
-      console.error('Error deleting data', error)
-      setError('Failed to delete data. Please try again.')
+      console.error('Error deleting driver detail', error)
+      setError('Failed to delete. Please try again.')
     }
   }
 
   const handleSave = async () => {
     try {
       if (editMode) {
-        await vehicleService.updateVehicle(formData.id, formData)
+        await driverDetailsService.updateDriverDetails(formData.id, formData)
       } else {
-        await vehicleService.createVehicle(formData)
+        await driverDetailsService.createDriverDetails(formData)
       }
       setModalVisible(false)
       fetchData()
@@ -90,6 +117,7 @@ const VehicleList = () => {
 
   useEffect(() => {
     fetchData()
+    fetchDropdownData()
   }, [currentPage])
 
   if (loading) return <AppLoadingSpinner />
@@ -105,17 +133,18 @@ const VehicleList = () => {
         )}
         <CCard>
           <CCardHeader className="d-flex align-items-center justify-content-between">
-            <strong>Vehicles</strong>
+            <strong>Driver Details</strong>
             <CButton color="primary" onClick={handleCreateNew}>
               Create New
             </CButton>
           </CCardHeader>
           <CCardBody>
             <AppPaginatedTable
-               columns={[
-            { label: 'Vehicle No', accessor: 'vehicleNo' },  // <-- Update label here
-            { label: 'Status', accessor: 'isActive' }
-               ]}
+              columns={[
+                { label: 'Vehicle', accessor: 'vehicleNo' },
+                { label: 'Route', accessor: 'routeName' },
+                { label: 'Driver', accessor: 'driverName' }
+              ]}
               data={data}
               currentPage={currentPage}
               itemsPerPage={ITEMS_PER_PAGE}
@@ -123,22 +152,25 @@ const VehicleList = () => {
               onPageChange={setCurrentPage}
               actionButtons={[
                 { label: 'Edit', onClick: handleEdit },
-                { label: 'Delete', onClick: handleDelete },
+                { label: 'Delete', onClick: handleDelete }
               ]}
             />
           </CCardBody>
         </CCard>
       </CCol>
-      <VehicleModal
+      <DriverDetailsModal
         visible={modalVisible}
         onClose={() => setModalVisible(false)}
         onSave={handleSave}
         formData={formData}
         setFormData={setFormData}
         editMode={editMode}
+        vehicles={vehicles}
+        routes={routes}
+        drivers={drivers}
       />
     </CRow>
   )
 }
 
-export default VehicleList
+export default DriverDetailsList

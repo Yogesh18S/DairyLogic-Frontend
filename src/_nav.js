@@ -1,14 +1,12 @@
   import {
   cilDrop,
   cilInbox,
-  cilInstitution,
   cilSpeedometer,
   cilTruck,
   cilUser
 } from '@coreui/icons'
 import CIcon from '@coreui/icons-react'
 import { CNavItem, CNavTitle } from '@coreui/react'
-import React from 'react'
 import { getUserRole } from './helper/getUserRole'
 
   const fullMenu = [
@@ -45,6 +43,13 @@ import { getUserRole } from './helper/getUserRole'
       icon: <CIcon icon={cilUser} customClassName="nav-icon" />,
       // role: ['Admin','FranchiseAdmin']
     },
+      {
+      component: CNavItem,
+      name: 'DriverDetails',
+      to:'/driver-detail',
+      icon: <CIcon icon={cilUser} customClassName="nav-icon" />,
+      // role: ['Admin','FranchiseAdmin']
+    },
     // masters
     {
       component: CNavTitle,
@@ -64,35 +69,7 @@ import { getUserRole } from './helper/getUserRole'
       to: '/vehicle',
       icon: <CIcon icon={cilDrop} customClassName="nav-icon" />,
       // role: ['Admin']
-    },
-    {
-      component: CNavItem,
-      name: 'Franchise',
-      to: '/franchise-list',
-      icon: <CIcon icon={cilInstitution} customClassName="nav-icon" />,
-      // role: ['Admin']
-    },
-    {
-      component: CNavItem,
-      name: 'Delivery Details',
-      to: '/driver-details',
-      icon: <CIcon icon={cilInbox} customClassName="nav-icon" />,
-      // role: ['Admin','FranchiseAdmin']
-    },
-    {
-      component: CNavItem,
-      name: 'User Management',
-      to: '/users-management',
-      icon: <CIcon icon={cilInbox} customClassName="nav-icon"/>,
-      // role: ['Admin']
-    },
-    {
-      component: CNavItem,
-      name: 'Franchise Items',
-      to: '/franchise-items',
-      icon: <CIcon icon={cilInbox} customClassName="nav-icon"/>,
-      // role: ['Admin','FranchiseAdmin']
-    },
+    }
   ]
 
   export const getNavItems = () => {

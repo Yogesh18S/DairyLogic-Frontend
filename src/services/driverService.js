@@ -1,6 +1,9 @@
 import axiosInstance from "../axiosInstance";
 
 const driverService = {
+       getAllDriverList: () => {
+        return axiosInstance.get("/Driver/GetAll");
+    },
     getDriverList: (page, size) => {
         return axiosInstance.get(`/Driver/?PageNumber=${page}&PageSize=${size}`);
     },

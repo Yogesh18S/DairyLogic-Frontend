@@ -34,7 +34,7 @@ const CustomerList = () => {
 
   const fetchData = async () => {
     try {
-      const response = await customerService.getAllCustomers(currentPage, ITEMS_PER_PAGE)
+      const response = await customerService.getCustomer(currentPage, ITEMS_PER_PAGE)
       const formattedData = response.data.result.map((customer) => ({
         ...customer,
         isActive: customer.isActive ? 'Active' : 'Inactive',

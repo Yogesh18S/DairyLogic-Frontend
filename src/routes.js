@@ -10,6 +10,7 @@ const Driver = React.lazy(()=>import('./views/Driver/DriverList.js'))
 const Route = React.lazy(()=>import('./views/Route/RouteList.js'))
 const Vehicle = React.lazy(()=>import('./views/vehicle/VehicleList.js'))
 const DeliveryDetails = React.lazy(()=>import('./views/DeliveryDetails/DeliveryDetailsList.js'))
+const DriverDetails = React.lazy(()=>import('./views/DriverDetails/DriverDetailsList.js'))
 const routes = [
   { path: '/', exact: true, name: 'Home' },
   { path: '/dashboard', name: 'Dashboard', element: Dashboard },
@@ -18,7 +19,8 @@ const routes = [
   { path:'/driver',name:'Driver', element:Driver},
   { path:'/route',name:'Route', element:Route},
   {path:'/vehicle',name:'Vehicle',element:Vehicle},
-  {path:'/driver-details',name:'DeliveryDetails',element:DeliveryDetails}
+  {path:'/deliveryDetails',name:'DeliveryDetails',element:DeliveryDetails},
+  {path:'/driver-detail',name:'DriverDetails',element:DriverDetails}
 ]
 
 export default routes

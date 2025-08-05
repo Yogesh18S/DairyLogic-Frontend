@@ -1,7 +1,7 @@
 import axiosInstance from "../axiosInstance";
 
 const customerDetailsService = {
-    getCustomerList: (page, size) => {
+    getCustomer: (page, size) => {
         return axiosInstance.get(`/CustomerDetails/?PageNumber=${page}&PageSize=${size}`);
     },
 

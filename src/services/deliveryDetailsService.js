@@ -1,8 +1,8 @@
 import axiosInstance from "../axiosInstance";
 
 const deliveryDetailsService = {
-    getDeliveryDetailList: (page, size) => {
-        return axiosInstance.get(`/DeliveryDetails?PageNumber=${page}&PageSize=${size}`);
+    getDeliveryDetail: (page, size) => {
+        return axiosInstance.get(`/DriverDetails/?PageNumber=${page}&PageSize=${size}`);
     },
 
     getDeliveryDetailsById: (id) => {

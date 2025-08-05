@@ -36,7 +36,7 @@ const DriverList = () => {
 
   const fetchData = async () => {
     try {
-      const response = await driverService.getAllDrivers(currentPage, ITEMS_PER_PAGE)
+      const response = await driverService.getDriverList(currentPage, ITEMS_PER_PAGE)
       const formattedData = response.data.result.map(driver => ({
         ...driver,
         isActive: driver.isActive ? 'Active' : 'Inactive'
