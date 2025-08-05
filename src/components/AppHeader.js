@@ -51,24 +51,12 @@ const AppHeader = () => {
         </CHeaderToggler>
         <CHeaderNav className="d-none d-md-flex">
           <CNavItem>
-            <CNavLink to="/dashboard" as={NavLink}>
+            <CNavLink>
               Dashboard
             </CNavLink>
           </CNavItem>
         </CHeaderNav>
         <CHeaderNav>
-        {roles.includes("Admin") ? (
-             <CNavItem>
-             <CNavLink to="/change-franchise" as={NavLink}>
-              Franchise: {franchise.name} [Change]
-             </CNavLink>
-           </CNavItem>
-          ) : (
-            <div className="d-flex justify-content-center">
-              <CNavItem>Franchise: {franchise.name}</CNavItem>
-            </div>
-          )
-        }
         </CHeaderNav>
 
         <CHeaderNav className="ms-auto">

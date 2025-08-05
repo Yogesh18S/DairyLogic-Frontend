@@ -2,7 +2,7 @@ import axios from 'axios';
 import store from './store';
 
 // TODO:
-const baseURL = 'http://118.139.165.164:8005/api';
+const baseURL = 'https://localhost:7097/api';
 
 // Create an axios instance
 const axiosInstance = axios.create({

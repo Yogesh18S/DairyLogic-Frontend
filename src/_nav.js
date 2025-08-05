@@ -22,76 +22,76 @@ import { getUserRole } from './helper/getUserRole'
     {
       component: CNavTitle,
       name: 'Operations',
-      role: ['Admin','FranchiseAdmin']
+    
     },
     {
       component: CNavItem,
-      name: 'Orders',
-      to: '/pickup-orders',
+      name: 'Animal',
+      to: '/Animal-List',
       icon: <CIcon icon={cilTruck} customClassName="nav-icon" />,
-      role: ['Admin','FranchiseAdmin']
+      // role: ['Admin','FranchiseAdmin']
     },
     {
       component: CNavItem,
       name: 'Customers',
-      to: '/customers',
+      to: '/Customer',
       icon: <CIcon icon={cilDrop} customClassName="nav-icon" />,
-      role: ['Admin']
+      // role: ['Admin']
     },
     {
       component: CNavItem,
-      name: 'Agents',
-      to:'/agents',
+      name: 'Driver',
+      to:'/driver',
       icon: <CIcon icon={cilUser} customClassName="nav-icon" />,
-      role: ['Admin','FranchiseAdmin']
+      // role: ['Admin','FranchiseAdmin']
     },
     // masters
     {
       component: CNavTitle,
       name: 'Masters',
-      role: ['Admin','FranchiseAdmin']
+      // role: ['Admin','FranchiseAdmin']
     },
     {
       component: CNavItem,
-      name: 'Scrap Categories',
-      to: '/scrap-categories',
+      name: 'Route',
+      to: '/route',
       icon: <CIcon icon={cilDrop} customClassName="nav-icon" />,
-      role: ['Admin']
+      // role: ['Admin']
     },
     {
       component: CNavItem,
-      name: 'Scrap Items',
-      to: '/scrap-items',
+      name: 'Vehicle',
+      to: '/vehicle',
       icon: <CIcon icon={cilDrop} customClassName="nav-icon" />,
-      role: ['Admin']
+      // role: ['Admin']
     },
     {
       component: CNavItem,
       name: 'Franchise',
       to: '/franchise-list',
       icon: <CIcon icon={cilInstitution} customClassName="nav-icon" />,
-      role: ['Admin']
+      // role: ['Admin']
     },
     {
       component: CNavItem,
-      name: 'Customer Quotation',
-      to: '/customer-quotations',
+      name: 'Delivery Details',
+      to: '/driver-details',
       icon: <CIcon icon={cilInbox} customClassName="nav-icon" />,
-      role: ['Admin','FranchiseAdmin']
+      // role: ['Admin','FranchiseAdmin']
     },
     {
       component: CNavItem,
       name: 'User Management',
       to: '/users-management',
       icon: <CIcon icon={cilInbox} customClassName="nav-icon"/>,
-      role: ['Admin']
+      // role: ['Admin']
     },
     {
       component: CNavItem,
       name: 'Franchise Items',
       to: '/franchise-items',
       icon: <CIcon icon={cilInbox} customClassName="nav-icon"/>,
-      role: ['Admin','FranchiseAdmin']
+      // role: ['Admin','FranchiseAdmin']
     },
   ]
 

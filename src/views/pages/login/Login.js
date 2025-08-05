@@ -39,7 +39,7 @@ const Login = () => {
     try {
       // Send login request to the backend using the base URL from environment variables
       // const response = await axios.post(`${process.env.VITE_APP_API_BASE_URL}/Identity/PasswordLogin`, { email, password });
-      const response = await axios.post('http://118.139.165.164:8005/api/Identity/PasswordLogin', { userNameOrMobile: userName, password });
+      const response = await axios.post('https://localhost:7097/api/Identity/PasswordLogin', { userNameOrMobile: userName, password });
 
       // Extract access token and refresh token from response
       const { accessToken, refreshToken } = response.data.result;

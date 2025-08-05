@@ -6,7 +6,7 @@ const AppFooter = () => {
     <CFooter className="px-4">
       <div>
         <a href="https://scrapdoor.com" target="_blank" rel="noopener noreferrer">
-          Scrapdoor Admin
+          Dairy Logic
         </a>
         <span className="ms-1">&copy; 2025</span>
       </div>
