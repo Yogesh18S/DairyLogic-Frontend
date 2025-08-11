@@ -13,7 +13,7 @@ import AppLoadingSpinner from '../../components/AppLoadingSpinner'
 import AppPaginatedTable from '../../components/table/AppPaginatedTable'
 import { ITEMS_PER_PAGE } from '../../constants/globalConstants'
 import customerService from '../../services/customerDetailsService'
-
+import { useNavigate } from 'react-router-dom';
 const CustomerList = () => {
   const [data, setData] = useState([])
   const [currentPage, setCurrentPage] = useState(1)
@@ -31,6 +31,15 @@ const CustomerList = () => {
     address: '',
     isActive: true
   })
+  
+const navigate = useNavigate();
+  const handleCreateNew = () => {
+    navigate('/create-customer'); // or your desired route
+  };
+
+const handleEdit = (id) => {
+  navigate(`/create-customer/edit/${id}`);
+};
 
   const fetchData = async () => {
     try {
@@ -49,19 +58,16 @@ const CustomerList = () => {
     }
   }
 
-  const handleCreateNew = () => {
-    setFormData({ id: '', firstName: '', lastName: '', phoneNumber: '', email: '', address: '', isActive: true })
-    setEditMode(false)
-    setModalVisible(true)
-  }
+  // const handleEdit = (id) => {
+  //   const itemToEdit = data.find((item) => item.id === id)
+  //   const isActiveBool = itemToEdit.isActive === 'Active'
+  //   setFormData({ ...itemToEdit, isActive: isActiveBool })
+  //   setEditMode(true)
+  //   setModalVisible(true)
+  // }
 
-  const handleEdit = (id) => {
-    const itemToEdit = data.find((item) => item.id === id)
-    const isActiveBool = itemToEdit.isActive === 'Active'
-    setFormData({ ...itemToEdit, isActive: isActiveBool })
-    setEditMode(true)
-    setModalVisible(true)
-  }
+
+
 
   const handleDelete = async (id) => {
     if (!window.confirm('Are you sure you want to delete this item?')) return
@@ -110,6 +116,7 @@ const CustomerList = () => {
             <CButton color="primary" onClick={handleCreateNew}>
               Create New
             </CButton>
+            
           </CCardHeader>
           <CCardBody>
             <AppPaginatedTable

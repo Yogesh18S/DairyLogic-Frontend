@@ -13,7 +13,6 @@ import AppLoadingSpinner from '../../components/AppLoadingSpinner'
 import AppPaginatedTable from '../../components/table/AppPaginatedTable'
 import { ITEMS_PER_PAGE } from '../../constants/globalConstants'
 import deliveryDetailsService from '../../services/deliveryDetailsService'
-import DeliveryDetailsModal from './DeliveryDetailsModal'
 
 const DeliveryDetailsList = () => {
   const [data, setData] = useState([])
@@ -33,7 +32,7 @@ const DeliveryDetailsList = () => {
 
    const fetchData = async () => {
       try {
-        const response = await deliveryDetailsService.getAllDeliveryDetails(currentPage, ITEMS_PER_PAGE)
+        const response = await deliveryDetailsService.getDeliveryDetail(currentPage, ITEMS_PER_PAGE)
         console.log(response)
         const formattedData = response.data.result.map((driver) => ({
           ...driver,
@@ -49,28 +48,13 @@ const DeliveryDetailsList = () => {
       }
     }
   
-  const handleCreateNew = () => {
-    setFormData({ id: '', deliveryDate: '', deliveryAddress: '', status: '' })
-    setEditMode(false)
-    setModalVisible(true)
-  }
+
 
   const handleEdit = (id) => {
     const itemToEdit = data.find((item) => item.id === id)
     setFormData(itemToEdit)
     setEditMode(true)
     setModalVisible(true)
-  }
-
-  const handleDelete = async (id) => {
-    if (!window.confirm('Are you sure you want to delete this record?')) return
-    try {
-      await deliveryDetailsService.deleteDeliveryDetails(id)
-      fetchData()
-    } catch (error) {
-      console.error('Error deleting data', error)
-      setError('Failed to delete data. Please try again.')
-    }
   }
 
   const handleSave = async () => {
@@ -106,16 +90,15 @@ const DeliveryDetailsList = () => {
         <CCard>
           <CCardHeader className="d-flex align-items-center justify-content-between">
             <strong>Delivery Details</strong>
-            <CButton color="primary" onClick={handleCreateNew}>
-              Create New
-            </CButton>
           </CCardHeader>
           <CCardBody>
             <AppPaginatedTable
               columns={[
-                { label: 'Delivery Date', accessor: 'deliveryDate' },
-                { label: 'Address', accessor: 'deliveryAddress' },
-                { label: 'Status', accessor: 'status' }
+                { label: 'Customer Name', accessor: 'deliveryDate' },
+                { label: 'Quantity (Liter)', accessor: 'deliveryAddress' },
+                { label: 'Status', accessor: 'status' },
+                { label: 'DeliverySequence', accessor: 'deliverySequence' },
+                { label: 'Route', accessor: 'route' }
               ]}
               data={data}
               currentPage={currentPage}
@@ -123,21 +106,13 @@ const DeliveryDetailsList = () => {
               totalRecords={totalRecords}
               onPageChange={setCurrentPage}
               actionButtons={[
-                { label: 'Edit', onClick: handleEdit },
-                { label: 'Delete', onClick: handleDelete },
+                { label: 'Edit', onClick: handleEdit }
               ]}
             />
           </CCardBody>
         </CCard>
       </CCol>
-      <DeliveryDetailsModal
-        visible={modalVisible}
-        onClose={() => setModalVisible(false)}
-        onSave={handleSave}
-        formData={formData}
-        setFormData={setFormData}
-        editMode={editMode}
-      />
+
     </CRow>
   )
 }
