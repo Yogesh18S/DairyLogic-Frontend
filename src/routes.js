@@ -15,6 +15,7 @@ const DeliverySequence=React.lazy(()=>import('./views/Delivery-Sequence/Delivery
 const DailyVehicleLoaded = React.lazy(()=>import('./views/DailyVehicleLoad/dailyVehicleLoadedList.js'))
 const Product = React.lazy(()=>import('./views/Product/ProductList.js'))
 const CreateCustomer = React.lazy(()=>import('./views/Customer/CreateCustomer.js'))
+const ReproductionCycle = React.lazy(()=>import('./views/Reproduction/ReproductionCycleList.js'))
 const routes = [
   { path: '/', exact: true, name: 'Home' },
   { path: '/dashboard', name: 'Dashboard', element: Dashboard },
@@ -28,7 +29,8 @@ const routes = [
   {path:'/delivery-sequence',name:'Delivery Sequence',element:DeliverySequence},
   {path:'/daily-vehicle-load',name:'Daily Vehicle Load',element:DailyVehicleLoaded},
   {path:'/product',name:'Product',element:Product},
-  {path:'/create-customer',name:'Create Customer',element:CreateCustomer}
+  {path:'/create-customer',name:'Create Customer',element:CreateCustomer},
+  {path:'/reproductionCycle',name:'ReproductionCycle',element:ReproductionCycle}
 ]
 
 export default routes

@@ -77,6 +77,13 @@ import { getUserRole } from './helper/getUserRole'
       icon: <CIcon icon={cilUser} customClassName="nav-icon" />,
       // role: ['Admin','FranchiseAdmin']
     },
+      {
+      component: CNavItem,
+      name: 'ReproductionCycle',
+      to:'/reproductionCycle',
+      icon: <CIcon icon={cilUser} customClassName="nav-icon" />,
+      // role: ['Admin','FranchiseAdmin']
+    },
     // masters
     {
       component: CNavTitle,

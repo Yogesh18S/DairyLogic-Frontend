@@ -33,7 +33,7 @@ const reproductionCycleService = {
 
   // Update cycle status
   updateCycleStatus: (data) => {
-    return axiosInstance.post(`/ReproductionCycle/UpdateCycleStatusAsync`, data);
+    return axiosInstance.post(`/ReproductionCycle/UpdateCycleStatus`, data);
   }
 };
 

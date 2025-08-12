@@ -1,6 +1,9 @@
 import axiosInstance from "../axiosInstance";
 
 const animalService={
+    getAllAnimals:()=>{
+        return axiosInstance.get('/Animal/GetAll')
+    },
     getAnimalsList: (page, size) => {
         return axiosInstance.get(`/Animal/?PageNumber=${page}&PageSize=${size}`);
     },
