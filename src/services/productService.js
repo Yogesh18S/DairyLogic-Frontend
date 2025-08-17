@@ -3,6 +3,7 @@
 import axiosInstance from '../axiosInstance'
 
 const productService = {
+  
   getAllProductList: () => {
     return axiosInstance.get('/ProductMaster/GetAll')
   },
