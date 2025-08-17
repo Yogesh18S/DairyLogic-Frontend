@@ -8,7 +8,6 @@ import {
   CCol,
   CRow,
   CFormInput,
-  CFormInput,
 } from '@coreui/react'
 import { useEffect, useState } from 'react'
 import AppLoadingSpinner from '../../components/AppLoadingSpinner'
