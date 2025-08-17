@@ -164,7 +164,7 @@ const handleUpdateStatus = (cycle) => {
                   <CTableDataCell>
   <CButton
     size="sm"
-    color="info"
+    color="primary"
     onClick={() => fetchHistory(cycle.animalId)}
     className="me-2"
   >
@@ -173,7 +173,7 @@ const handleUpdateStatus = (cycle) => {
 
   <CButton
     size="sm"
-    color="warning"
+    color="primary"
     className="me-2"
     onClick={() => handleEdit(cycle)}
   >
@@ -182,7 +182,7 @@ const handleUpdateStatus = (cycle) => {
 
   <CButton
     size="sm"
-    color="secondary"
+    color="primary"
     onClick={() => handleUpdateStatus(cycle)}
   >
     Update Status

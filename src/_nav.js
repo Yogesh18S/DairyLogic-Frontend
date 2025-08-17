@@ -75,14 +75,12 @@ import { getUserRole } from './helper/getUserRole'
       name: 'Delivery Details',
       to:'/delivery-details',
       icon: <CIcon icon={cilUser} customClassName="nav-icon" />,
-      // role: ['Admin','FranchiseAdmin']
     },
       {
       component: CNavItem,
       name: 'ReproductionCycle',
       to:'/reproductionCycle',
       icon: <CIcon icon={cilUser} customClassName="nav-icon" />,
-      // role: ['Admin','FranchiseAdmin']
     },
     // masters
     {
@@ -101,6 +99,12 @@ import { getUserRole } from './helper/getUserRole'
       component: CNavItem,
       name: 'Vehicle',
       to: '/vehicle',
+      icon: <CIcon icon={cilDrop} customClassName="nav-icon" />,
+      // role: ['Admin']
+    },
+    {  component: CNavItem,
+      name: 'Invoice',
+      to: '/invoice',
       icon: <CIcon icon={cilDrop} customClassName="nav-icon" />,
       // role: ['Admin']
     }

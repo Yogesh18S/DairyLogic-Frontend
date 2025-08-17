@@ -44,7 +44,7 @@ export const setupInterceptors = (navigate) => {
     },
     async (error) => {
 
-      store.dispatch({ type: 'SET_LOADING', payload: false }); // Stop loading on error
+      store.dispatch({ type: 'SET_LOADING', payload: false }) // Stop loading on error
 
       const originalRequest = error.config;
 
@@ -55,7 +55,7 @@ export const setupInterceptors = (navigate) => {
           const refreshToken = getRefreshToken();
 
           if (!refreshToken) {
-            navigate('/login'); // Redirect using React Router
+            navigate('/login') // Redirect using React Router
             return Promise.reject(error);
           }
 
