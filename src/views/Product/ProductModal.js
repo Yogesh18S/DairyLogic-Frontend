@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect } from 'react'
 import {
   CModal,
   CModalHeader,
@@ -9,64 +9,52 @@ import {
   CForm,
   CFormInput,
   CFormLabel,
-} from "@coreui/react";
+} from '@coreui/react'
 
-const ProductModal = ({
-  visible,
-  onClose,
-  onSave,
-  formData,
-  setFormData,
-  editMode,
-}) => {
+const ProductModal = ({ visible, onClose, onSave, formData, setFormData, editMode }) => {
   // When modal opens, populate form (on edit)
   useEffect(() => {
     if (visible && editMode && formData) {
       setFormData({
-        id: formData.id || "",
-        name: formData.name || "",
-        description: formData.description || "",
-        unit: formData.unit || "",
-        basePrice: formData.basePrice || "",
-      });
+        id: formData.id || '',
+        name: formData.name || '',
+        description: formData.description || '',
+        unit: formData.unit || '',
+        basePrice: formData.basePrice || '',
+      })
     } else if (visible && !editMode) {
       setFormData({
-        id: "",
-        name: "",
-        description: "",
-        unit: "",
-        basePrice: "",
-      });
+        id: '',
+        name: '',
+        description: '',
+        unit: '',
+        basePrice: '',
+      })
     }
-  }, [visible, editMode]);
+  }, [visible, editMode])
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
+    const { name, value } = e.target
     setFormData((prev) => ({
       ...prev,
-      [name]: name === "basePrice" ? parseFloat(value) || "" : value,
-    }));
-  };
+      [name]: name === 'basePrice' ? parseFloat(value) || '' : value,
+    }))
+  }
 
   const handleSubmit = () => {
-    onSave();
-  };
+    onSave()
+  }
 
   return (
     <CModal visible={visible} onClose={onClose}>
       <CModalHeader>
-        <CModalTitle>{editMode ? "Edit" : "Add"} Product</CModalTitle>
+        <CModalTitle>{editMode ? 'Edit' : 'Add'} Product</CModalTitle>
       </CModalHeader>
       <CModalBody>
         <CForm>
           <div className="mb-3">
             <CFormLabel htmlFor="name">Name</CFormLabel>
-            <CFormInput
-              id="name"
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
-            />
+            <CFormInput id="name" name="name" value={formData.name} onChange={handleChange} />
           </div>
           <div className="mb-3">
             <CFormLabel htmlFor="description">Description</CFormLabel>
@@ -79,12 +67,7 @@ const ProductModal = ({
           </div>
           <div className="mb-3">
             <CFormLabel htmlFor="unit">Unit</CFormLabel>
-            <CFormInput
-              id="unit"
-              name="unit"
-              value={formData.unit}
-              onChange={handleChange}
-            />
+            <CFormInput id="unit" name="unit" value={formData.unit} onChange={handleChange} />
           </div>
           <div className="mb-3">
             <CFormLabel htmlFor="basePrice">Base Price</CFormLabel>
@@ -107,7 +90,7 @@ const ProductModal = ({
         </CButton>
       </CModalFooter>
     </CModal>
-  );
-};
+  )
+}
 
-export default ProductModal;
+export default ProductModal

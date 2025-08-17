@@ -26,29 +26,26 @@ const DeliveryDetailsList = () => {
     id: '',
     deliveryDate: '',
     deliveryAddress: '',
-    status: ''
+    status: '',
   })
 
-
-   const fetchData = async () => {
-      try {
-        const response = await deliveryDetailsService.getDeliveryDetail(currentPage, ITEMS_PER_PAGE)
-        console.log(response)
-        const formattedData = response.data.result.map((driver) => ({
-          ...driver,
-          isActive: driver.isActive ? 'Active' : 'Inactive',
-        }))
-        setData(formattedData)
-        setTotalRecords(response.data.pagedListMetadata.totalRecords)
-      } catch (error) {
-        console.error('API request failed', error)
-        setError('Failed to fetch data. Please try again later.')
-      } finally {
-        setLoading(false)
-      }
+  const fetchData = async () => {
+    try {
+      const response = await deliveryDetailsService.getDeliveryDetail(currentPage, ITEMS_PER_PAGE)
+      console.log(response)
+      const formattedData = response.data.result.map((driver) => ({
+        ...driver,
+        isActive: driver.isActive ? 'Active' : 'Inactive',
+      }))
+      setData(formattedData)
+      setTotalRecords(response.data.pagedListMetadata.totalRecords)
+    } catch (error) {
+      console.error('API request failed', error)
+      setError('Failed to fetch data. Please try again later.')
+    } finally {
+      setLoading(false)
     }
-  
-
+  }
 
   const handleEdit = (id) => {
     const itemToEdit = data.find((item) => item.id === id)
@@ -95,24 +92,21 @@ const DeliveryDetailsList = () => {
             <AppPaginatedTable
               columns={[
                 { label: 'Customer Name', accessor: 'deliveryDate' },
-                { label: 'Quantity (Liter)', accessor: 'deliveryAddress' },
+                { label: 'Quantity (Liter)', accessor: 'quantity' },
                 { label: 'Status', accessor: 'status' },
                 { label: 'DeliverySequence', accessor: 'deliverySequence' },
-                { label: 'Route', accessor: 'route' }
+                { label: 'Route', accessor: 'routeName' },
               ]}
               data={data}
               currentPage={currentPage}
               itemsPerPage={ITEMS_PER_PAGE}
               totalRecords={totalRecords}
               onPageChange={setCurrentPage}
-              actionButtons={[
-                { label: 'Edit', onClick: handleEdit }
-              ]}
+              actionButtons={[{ label: 'Edit', onClick: handleEdit }]}
             />
           </CCardBody>
         </CCard>
       </CCol>
-
     </CRow>
   )
 }

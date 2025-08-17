@@ -6,7 +6,7 @@ import {
   CCardBody,
   CCardHeader,
   CCol,
-  CRow
+  CRow,
 } from '@coreui/react'
 import { useEffect, useState } from 'react'
 import AppLoadingSpinner from '../../components/AppLoadingSpinner'
@@ -33,7 +33,7 @@ const DriverDetailsList = () => {
     id: '',
     vehicleId: '',
     routeId: '',
-    userId: ''
+    userId: '',
   })
 
   const fetchData = async () => {
@@ -55,9 +55,9 @@ const DriverDetailsList = () => {
       const [vehiclesRes, routesRes, driversRes] = await Promise.all([
         vehicleService.getAllDriver(),
         routeService.getAllRouteList(),
-        driverService.getAllDriverList()
+        driverService.getAllDriverList(),
       ])
-      setVehicles(vehiclesRes.data.result);
+      setVehicles(vehiclesRes.data.result)
       setRoutes(routesRes.data.result)
       setDrivers(driversRes.data.result)
     } catch (error) {
@@ -71,7 +71,7 @@ const DriverDetailsList = () => {
       id: '',
       vehicleId: '',
       routeId: '',
-      userId: ''
+      userId: '',
     })
     setEditMode(false)
     setModalVisible(true)
@@ -83,7 +83,7 @@ const DriverDetailsList = () => {
       id: itemToEdit.id,
       vehicleId: itemToEdit.vehicleId,
       routeId: itemToEdit.routeId,
-      userId: itemToEdit.userId
+      userId: itemToEdit.userId,
     })
     setEditMode(true)
     setModalVisible(true)
@@ -143,7 +143,7 @@ const DriverDetailsList = () => {
               columns={[
                 { label: 'Vehicle', accessor: 'vehicleNo' },
                 { label: 'Route', accessor: 'routeName' },
-                { label: 'Driver', accessor: 'driverName' }
+                { label: 'Driver', accessor: 'driverName' },
               ]}
               data={data}
               currentPage={currentPage}
@@ -152,7 +152,7 @@ const DriverDetailsList = () => {
               onPageChange={setCurrentPage}
               actionButtons={[
                 { label: 'Edit', onClick: handleEdit },
-                { label: 'Delete', onClick: handleDelete }
+                { label: 'Delete', onClick: handleDelete },
               ]}
             />
           </CCardBody>

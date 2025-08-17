@@ -1,15 +1,21 @@
-import React from 'react';
+import React from 'react'
 import {
-  CModal, CModalHeader, CModalTitle, CModalBody,
-  CForm, CFormLabel, CFormSelect, CFormInput, CButton
-} from '@coreui/react';
+  CModal,
+  CModalHeader,
+  CModalTitle,
+  CModalBody,
+  CForm,
+  CFormLabel,
+  CFormSelect,
+  CFormInput,
+  CButton,
+} from '@coreui/react'
 
 const StatusUpdateModal = ({ visible, onClose, formData, setFormData, onSubmit }) => {
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
-  };
-  
+    const { name, value } = e.target
+    setFormData((prev) => ({ ...prev, [name]: value }))
+  }
 
   return (
     <CModal visible={visible} onClose={onClose}>
@@ -40,11 +46,13 @@ const StatusUpdateModal = ({ visible, onClose, formData, setFormData, onSubmit }
             onChange={handleChange}
           />
 
-          <CButton type="submit" color="success" className="mt-3">Update</CButton>
+          <CButton type="submit" color="success" className="mt-3">
+            Update
+          </CButton>
         </CForm>
       </CModalBody>
     </CModal>
-  );
-};
+  )
+}
 
-export default StatusUpdateModal;
+export default StatusUpdateModal

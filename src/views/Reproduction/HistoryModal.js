@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 import {
   CModal,
   CModalHeader,
@@ -12,7 +12,7 @@ import {
   CTableHeaderCell,
   CTableBody,
   CTableDataCell,
-} from '@coreui/react';
+} from '@coreui/react'
 
 const HistoryModal = ({ visible, onClose, historyData, selectedAnimalId }) => {
   return (
@@ -43,10 +43,12 @@ const HistoryModal = ({ visible, onClose, historyData, selectedAnimalId }) => {
         )}
       </CModalBody>
       <CModalFooter>
-        <CButton color="secondary" onClick={onClose}>Close</CButton>
+        <CButton color="secondary" onClick={onClose}>
+          Close
+        </CButton>
       </CModalFooter>
     </CModal>
-  );
-};
+  )
+}
 
-export default HistoryModal;
+export default HistoryModal

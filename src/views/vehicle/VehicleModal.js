@@ -26,7 +26,7 @@ const VehicleModal = ({ visible, onClose, onSave, formData, setFormData, editMod
       </CModalHeader>
       <CModalBody>
         <CForm>
-           <CFormInput
+          <CFormInput
             label="Vehicle Number"
             name="vehicleNo"
             value={formData.vehicleNo}

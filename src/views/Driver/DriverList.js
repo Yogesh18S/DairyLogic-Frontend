@@ -6,7 +6,7 @@ import {
   CCardBody,
   CCardHeader,
   CCol,
-  CRow
+  CRow,
 } from '@coreui/react'
 import { useEffect, useState } from 'react'
 import AppLoadingSpinner from '../../components/AppLoadingSpinner'
@@ -31,15 +31,15 @@ const DriverList = () => {
     email: '',
     password: '',
     isActive: true,
-    address: ''
+    address: '',
   })
 
   const fetchData = async () => {
     try {
       const response = await driverService.getDriverList(currentPage, ITEMS_PER_PAGE)
-      const formattedData = response.data.result.map(driver => ({
+      const formattedData = response.data.result.map((driver) => ({
         ...driver,
-        isActive: driver.isActive ? 'Active' : 'Inactive'
+        isActive: driver.isActive ? 'Active' : 'Inactive',
       }))
       setData(formattedData)
       setTotalRecords(response.data.pagedListMetadata.totalRecords)
@@ -60,7 +60,7 @@ const DriverList = () => {
       email: '',
       password: '',
       isActive: true,
-      address: ''
+      address: '',
     })
     setEditMode(false)
     setModalVisible(true)
@@ -130,7 +130,7 @@ const DriverList = () => {
                 { label: 'Email', accessor: 'email' },
                 { label: 'Phone Number', accessor: 'phoneNumber' },
                 { label: 'Status', accessor: 'isActive' },
-                { label: 'Address', accessor: 'address' }
+                { label: 'Address', accessor: 'address' },
               ]}
               data={data}
               currentPage={currentPage}
@@ -139,7 +139,7 @@ const DriverList = () => {
               onPageChange={setCurrentPage}
               actionButtons={[
                 { label: 'Edit', onClick: handleEdit },
-                { label: 'Delete', onClick: handleDelete }
+                { label: 'Delete', onClick: handleDelete },
               ]}
             />
           </CCardBody>

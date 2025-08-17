@@ -1,13 +1,22 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react'
 import {
-  CForm, CFormInput, CFormLabel, CFormCheck, CButton,
-  CRow, CCol, CCard, CCardBody, CCardHeader, CFormSelect
-} from '@coreui/react';
-import { useNavigate, useParams } from 'react-router-dom';
-import routeService from '../../services/routeService';
-import customerDetailsService from '../../services/customerDetailsService';
+  CForm,
+  CFormInput,
+  CFormLabel,
+  CFormCheck,
+  CButton,
+  CRow,
+  CCol,
+  CCard,
+  CCardBody,
+  CCardHeader,
+  CFormSelect,
+} from '@coreui/react'
+import { useNavigate, useParams } from 'react-router-dom'
+import routeService from '../../services/routeService'
+import customerDetailsService from '../../services/customerDetailsService'
 const CreateCustomer = () => {
-  const { id } = useParams();
+  const { id } = useParams()
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -35,81 +44,81 @@ const CreateCustomer = () => {
     price: '',
     isActive: true,
     isDeleted: false,
-  });
+  })
 
-  const [routes, setRoutes] = useState([]);
-  const navigate = useNavigate();
+  const [routes, setRoutes] = useState([])
+  const navigate = useNavigate()
 
-//  useEffect(() => {
-//     fetchRoutes();
-//     if (id) fetchCustomer(id);
-//   }, [id]);
+  //  useEffect(() => {
+  //     fetchRoutes();
+  //     if (id) fetchCustomer(id);
+  //   }, [id]);
 
   console.log(id)
   useEffect(() => {
     if (id) {
-      fetchCustomer(id);
+      fetchCustomer(id)
     }
-  }, [id]);
+  }, [id])
 
   const fetchRoutes = async () => {
     try {
-      const { data } = await routeService.getAllRouteList();
+      const { data } = await routeService.getAllRouteList()
       setRoutes(
-        data?.result?.map(r => ({
+        data?.result?.map((r) => ({
           id: r.id,
-          name: r.name?.trim() || ''
-        })) || []
-      );
+          name: r.name?.trim() || '',
+        })) || [],
+      )
     } catch (error) {
-      console.error('Error fetching routes:', error);
+      console.error('Error fetching routes:', error)
     }
-  };
+  }
 
   const fetchCustomer = async (customerId) => {
     console.log(customerId)
     try {
-      setLoading(true);
-      const { data } = await customerDetailsService.getCustomerById(customerId);
+      setLoading(true)
+      const { data } = await customerDetailsService.getCustomerById(customerId)
       console.log(data)
       if (data) {
-        setFormData(prev => ({
+        setFormData((prev) => ({
           ...prev,
           ...data,
-          routeId: data.routeId || ''
-        }));
+          routeId: data.routeId || '',
+        }))
       }
     } catch (error) {
-      console.error('Error fetching customer:', error);
+      console.error('Error fetching customer:', error)
     } finally {
-      setLoading(false);
+      setLoading(false)
     }
-  };
+  }
 
   const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
-    setFormData(prev => ({
+    const { name, value, type, checked } = e.target
+    setFormData((prev) => ({
       ...prev,
-      [name]: type === 'checkbox' ? checked : value.trim()
-    }));
-  };
+      [name]: type === 'checkbox' ? checked : value.trim(),
+    }))
+  }
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    e.preventDefault()
     try {
       if (id) {
-        await customerDetailsService.updateCustomer(id, formData);
-        alert('Customer updated successfully!');
+        await customerDetailsService.updateCustomer(id, formData)
+        alert('Customer updated successfully!')
       } else {
-        await customerDetailsService.createCustomer(formData);
-        alert('Customer created successfully!');
+        await customerDetailsService.createCustomer(formData)
+        alert('Customer created successfully!')
       }
-      navigate('/customers');
+      navigate('/customers')
     } catch (error) {
-      console.error('Error saving customer:', error);
-      alert('Failed to save customer');
+      console.error('Error saving customer:', error)
+      alert('Failed to save customer')
     }
-  };
+  }
 
   return (
     <CCard>
@@ -122,7 +131,12 @@ const CreateCustomer = () => {
           <CRow className="mb-3">
             <CCol md={6}>
               <CFormLabel>First Name</CFormLabel>
-              <CFormInput name="firstName" value={formData.firstName} onChange={handleChange} required />
+              <CFormInput
+                name="firstName"
+                value={formData.firstName}
+                onChange={handleChange}
+                required
+              />
             </CCol>
             <CCol md={6}>
               <CFormLabel>Last Name</CFormLabel>
@@ -146,11 +160,21 @@ const CreateCustomer = () => {
           <CRow className="mb-3">
             <CCol md={6}>
               <CFormLabel>Quantity (Liters)</CFormLabel>
-              <CFormInput type="number" name="quantityLiter" value={formData.quantityLiter} onChange={handleChange} />
+              <CFormInput
+                type="number"
+                name="quantityLiter"
+                value={formData.quantityLiter}
+                onChange={handleChange}
+              />
             </CCol>
             <CCol md={6}>
               <CFormLabel>Price</CFormLabel>
-              <CFormInput type="number" name="price" value={formData.price} onChange={handleChange} />
+              <CFormInput
+                type="number"
+                name="price"
+                value={formData.price}
+                onChange={handleChange}
+              />
             </CCol>
           </CRow>
 
@@ -158,11 +182,19 @@ const CreateCustomer = () => {
           <CRow className="mb-3">
             <CCol md={6}>
               <CFormLabel>Address Line 1</CFormLabel>
-              <CFormInput name="addressLine1" value={formData.addressLine1} onChange={handleChange} />
+              <CFormInput
+                name="addressLine1"
+                value={formData.addressLine1}
+                onChange={handleChange}
+              />
             </CCol>
             <CCol md={6}>
               <CFormLabel>Address Line 2</CFormLabel>
-              <CFormInput name="addressLine2" value={formData.addressLine2} onChange={handleChange} />
+              <CFormInput
+                name="addressLine2"
+                value={formData.addressLine2}
+                onChange={handleChange}
+              />
             </CCol>
           </CRow>
 
@@ -198,11 +230,21 @@ const CreateCustomer = () => {
           <CRow className="mb-3">
             <CCol md={6}>
               <CFormLabel>Start Date</CFormLabel>
-              <CFormInput type="date" name="startDate" value={formData.startDate} onChange={handleChange} />
+              <CFormInput
+                type="date"
+                name="startDate"
+                value={formData.startDate}
+                onChange={handleChange}
+              />
             </CCol>
             <CCol md={6}>
               <CFormLabel>End Date</CFormLabel>
-              <CFormInput type="date" name="endDate" value={formData.endDate} onChange={handleChange} />
+              <CFormInput
+                type="date"
+                name="endDate"
+                value={formData.endDate}
+                onChange={handleChange}
+              />
             </CCol>
           </CRow>
 
@@ -211,7 +253,7 @@ const CreateCustomer = () => {
             <CCol>
               <CFormLabel>Delivery Days</CFormLabel>
               <div>
-                {['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].map(day => (
+                {['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].map((day) => (
                   <CFormCheck
                     key={day}
                     inline
@@ -231,22 +273,31 @@ const CreateCustomer = () => {
               <CFormLabel>Route</CFormLabel>
               <CFormSelect name="routeId" value={formData.routeId} onChange={handleChange}>
                 <option value="">Select Route</option>
-                {routes.map(route => (
-                  <option key={route.id} value={route.id}>{route.name}</option>
+                {routes.map((route) => (
+                  <option key={route.id} value={route.id}>
+                    {route.name}
+                  </option>
                 ))}
               </CFormSelect>
             </CCol>
             <CCol md={6}>
               <CFormLabel>Delivery Order</CFormLabel>
-              <CFormInput type="number" name="deliveryOrder" value={formData.deliveryOrder} onChange={handleChange} />
+              <CFormInput
+                type="number"
+                name="deliveryOrder"
+                value={formData.deliveryOrder}
+                onChange={handleChange}
+              />
             </CCol>
           </CRow>
 
-          <CButton color="success" type="submit">{id ? 'Update' : 'Submit'}</CButton>
+          <CButton color="success" type="submit">
+            {id ? 'Update' : 'Submit'}
+          </CButton>
         </CForm>
       </CCardBody>
     </CCard>
-  );
-};
+  )
+}
 
-export default CreateCustomer;
+export default CreateCustomer

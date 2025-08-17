@@ -35,7 +35,10 @@ const dailyVehicleLoadList = () => {
 
   const fetchData = async () => {
     try {
-      const response = await dailyVehicleLoadService.getDailyVehicleLoadedList(currentPage, ITEMS_PER_PAGE)
+      const response = await dailyVehicleLoadService.getDailyVehicleLoadedList(
+        currentPage,
+        ITEMS_PER_PAGE,
+      )
       console.log(response)
       const formattedData = response.data.result.map((item) => ({
         ...item,
@@ -57,9 +60,9 @@ const dailyVehicleLoadList = () => {
       vehicleId: '',
       vehicleNo: '',
       quantity: '',
-      deliveredQuantity: '',
-      remainingQuantity: '',
-      variance: '',
+      deliveredQuantity: 0,
+      remainingQuantity: 0,
+      variance: 0,
     })
     setEditMode(false)
     setModalVisible(true)
@@ -125,8 +128,9 @@ const dailyVehicleLoadList = () => {
               columns={[
                 { label: 'Vehicle No', accessor: 'vehicleNo' },
                 { label: 'Quantity', accessor: 'quantity' },
-                { label: 'Delivered Qty', accessor: 'deliveredQuantity' },
-                { label: 'Remaining Qty', accessor: 'remainingQuantity' },
+                { label: 'Delivered Quantity', accessor: 'deliveredQuantity' },
+                { label: 'Remaining Quantity', accessor: 'remainingQuantity' },
+                { label: 'Delivery Date', accessor: 'deliveryDate' },
                 { label: 'Variance', accessor: 'variance' },
               ]}
               data={data}

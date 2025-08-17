@@ -6,19 +6,18 @@ import {
   CModal,
   CModalBody,
   CModalHeader,
-  CModalTitle
+  CModalTitle,
 } from '@coreui/react'
 
 const DriverModal = ({ visible, onClose, onSave, formData, setFormData, editMode }) => {
-
   const handleChange = (e) => {
     const { name, value } = e.target
-    setFormData(prevState => ({ ...prevState, [name]: value }))
+    setFormData((prevState) => ({ ...prevState, [name]: value }))
   }
 
   const handleCheckboxChange = (e) => {
     const { name, checked } = e.target
-    setFormData(prevState => ({ ...prevState, [name]: checked }))
+    setFormData((prevState) => ({ ...prevState, [name]: checked }))
   }
 
   return (
@@ -51,7 +50,12 @@ const DriverModal = ({ visible, onClose, onSave, formData, setFormData, editMode
           {!editMode && (
             <div className="mb-3">
               <CFormLabel>Password</CFormLabel>
-              <CFormInput name="password" type="password" value={formData.password} onChange={handleChange} />
+              <CFormInput
+                name="password"
+                type="password"
+                value={formData.password}
+                onChange={handleChange}
+              />
             </div>
           )}
           <div className="mb-3 form-check">
@@ -66,8 +70,12 @@ const DriverModal = ({ visible, onClose, onSave, formData, setFormData, editMode
           </div>
         </CForm>
         <div className="d-flex justify-content-end gap-2">
-          <CButton color="secondary" onClick={onClose}>Cancel</CButton>
-          <CButton color="primary" onClick={onSave}>Save</CButton>
+          <CButton color="secondary" onClick={onClose}>
+            Cancel
+          </CButton>
+          <CButton color="primary" onClick={onSave}>
+            Save
+          </CButton>
         </div>
       </CModalBody>
     </CModal>

@@ -7,13 +7,14 @@ import {
   CCardHeader,
   CCol,
   CRow,
+  CFormInput,
 } from '@coreui/react'
 import { useEffect, useState } from 'react'
 import AppLoadingSpinner from '../../components/AppLoadingSpinner'
 import AppPaginatedTable from '../../components/table/AppPaginatedTable'
 import { ITEMS_PER_PAGE } from '../../constants/globalConstants'
 import customerService from '../../services/customerDetailsService'
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom'
 const CustomerList = () => {
   const [data, setData] = useState([])
   const [currentPage, setCurrentPage] = useState(1)
@@ -22,6 +23,8 @@ const CustomerList = () => {
   const [error, setError] = useState(null)
   const [modalVisible, setModalVisible] = useState(false)
   const [editMode, setEditMode] = useState(false)
+  const [searchText, setSearchText] = useState('')
+  const [customers, setCustomers] = useState([])
   const [formData, setFormData] = useState({
     id: '',
     firstName: '',
@@ -29,21 +32,21 @@ const CustomerList = () => {
     phoneNumber: '',
     email: '',
     address: '',
-    isActive: true
+    isActive: true,
   })
-  
-const navigate = useNavigate();
+
+  const navigate = useNavigate()
   const handleCreateNew = () => {
-    navigate('/create-customer'); // or your desired route
-  };
+    navigate('/create-customer') // or your desired route
+  }
 
-const handleEdit = (id) => {
-  navigate(`/create-customer/edit/${id}`);
-};
+  const handleEdit = (id) => {
+    navigate(`/create-customer/edit/${id}`)
+  }
 
-  const fetchData = async () => {
+  const fetchData = async (searchText = '') => {
     try {
-      const response = await customerService.getCustomer(currentPage, ITEMS_PER_PAGE)
+      const response = await customerService.getCustomer(currentPage, ITEMS_PER_PAGE, searchText)
       const formattedData = response.data.result.map((customer) => ({
         ...customer,
         isActive: customer.isActive ? 'Active' : 'Inactive',
@@ -65,9 +68,11 @@ const handleEdit = (id) => {
   //   setEditMode(true)
   //   setModalVisible(true)
   // }
-
-
-
+  const handleSearch = () => {
+    setSearchText(searchText)
+    setCurrentPage(1) // reset to first page when searching
+    fetchData(searchText)
+  }
 
   const handleDelete = async (id) => {
     if (!window.confirm('Are you sure you want to delete this item?')) return
@@ -78,6 +83,10 @@ const handleEdit = (id) => {
       console.error('Error deleting data', error)
       setError('Failed to delete data. Please try again.')
     }
+  }
+
+  const handleTransactionHistory = (customer) => {
+    console.log(customer)
   }
 
   const handleSave = async () => {
@@ -111,21 +120,40 @@ const handleEdit = (id) => {
           </CAlert>
         )}
         <CCard>
-          <CCardHeader className="d-flex align-items-center justify-content-between">
-            <strong>Customers</strong>
-            <CButton color="primary" onClick={handleCreateNew}>
-              Create New
-            </CButton>
-            
+          <CCardHeader>
+            <div className="d-flex flex-column flex-md-row align-items-center justify-content-between w-100 gap-2">
+              <strong className="mb-2 mb-md-0">Customers</strong>
+
+              <div className="d-flex flex-column flex-sm-row align-items-center gap-2 w-60 w-md-auto">
+                <CFormInput
+                  placeholder="Search by name"
+                  value={searchText}
+                  onChange={(e) => setSearchText(e.target.value)}
+                  className="flex-grow-1"
+                />
+                <CButton color="primary" onClick={handleSearch} className="w-20 w-sm-auto">
+                  Search
+                </CButton>
+              </div>
+
+              {/* Create New Button */}
+              <CButton
+                color="primary"
+                onClick={handleCreateNew}
+                className="w-19 w-md-auto mt-2 mt-md-0"
+              >
+                Create New
+              </CButton>
+            </div>
           </CCardHeader>
+
           <CCardBody>
             <AppPaginatedTable
               columns={[
-                { label: 'First Name', accessor: 'firstName' },
-                { label: 'Last Name', accessor: 'lastName' },
-                { label: 'Email', accessor: 'email' },
-                { label: 'Phone Number', accessor: 'phoneNumber' },
+                { label: 'Name', accessor: 'firstName' },
                 { label: 'Address', accessor: 'address' },
+                { label: 'Phone Number', accessor: 'phoneNumber' },
+                { label: 'City', accessor: 'city' },
                 { label: 'Status', accessor: 'isActive' },
               ]}
               data={data}
@@ -136,6 +164,10 @@ const handleEdit = (id) => {
               actionButtons={[
                 { label: 'Edit', onClick: handleEdit },
                 { label: 'Delete', onClick: handleDelete },
+                {
+                  label: 'Transaction History',
+                  onClick: (row) => handleTransactionHistory(row),
+                },
               ]}
             />
           </CCardBody>

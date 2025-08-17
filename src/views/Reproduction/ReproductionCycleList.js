@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react'
 import {
   CButton,
   CCard,
@@ -10,120 +10,123 @@ import {
   CTableHead,
   CTableHeaderCell,
   CTableRow,
-} from '@coreui/react';
+} from '@coreui/react'
 import { ITEMS_PER_PAGE } from '../../constants/globalConstants'
-import reproductionCycleService from '../../services/reproductionCycleService';
-import CreateReproductionCycleModal from './CreateReproductionCycleModal';
-import HistoryModal from './HistoryModal';
-import StatusUpdateModal from './StatusUpdateModal';
+import reproductionCycleService from '../../services/reproductionCycleService'
+import CreateReproductionCycleModal from './CreateReproductionCycleModal'
+import HistoryModal from './HistoryModal'
+import StatusUpdateModal from './StatusUpdateModal'
 const ReproductionCycleList = () => {
-  const [cycles, setCycles] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [showCreateModal, setShowCreateModal] = useState(false);
-  const [createFormData, setCreateFormData] = useState({ animalId: '', cycleStatus: '' });
-  const [isEdit, setIsEdit] = useState(false);
-  const [showHistoryModal, setShowHistoryModal] = useState(false);
-  const [historyData, setHistoryData] = useState([]);
-  const [selectedAnimalId, setSelectedAnimalId] = useState(null);
-  const [showStatusModal, setShowStatusModal] = useState(false);
+  const [cycles, setCycles] = useState([])
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState(null)
+  const [currentPage, setCurrentPage] = useState(1)
+  const [showCreateModal, setShowCreateModal] = useState(false)
+  const [createFormData, setCreateFormData] = useState({ animalId: '', cycleStatus: '' })
+  const [isEdit, setIsEdit] = useState(false)
+  const [showHistoryModal, setShowHistoryModal] = useState(false)
+  const [historyData, setHistoryData] = useState([])
+  const [selectedAnimalId, setSelectedAnimalId] = useState(null)
+  const [showStatusModal, setShowStatusModal] = useState(false)
   const [statusFormData, setStatusFormData] = useState({
-  cycleStatus: '',
-  nextCheckDate: ''
-  });
-  const [selectedCycleForStatus, setSelectedCycleForStatus] = useState(null);
+    cycleStatus: '',
+    nextCheckDate: '',
+  })
+  const [selectedCycleForStatus, setSelectedCycleForStatus] = useState(null)
   console.log(selectedCycleForStatus)
-const handleStatusSubmit = async (e) => {
-  e.preventDefault();
-  try {
-    await reproductionCycleService.updateCycleStatus({
+  const handleStatusSubmit = async (e) => {
+    e.preventDefault()
+    try {
+      await reproductionCycleService.updateCycleStatus({
         reproductionId: selectedCycleForStatus.id,
         cycleStatus: statusFormData.cycleStatus,
         nextCheckDate: statusFormData.nextCheckDate || null,
-        remark: ''
-});
-    setShowStatusModal(false);
-    fetchAllCycles();
-  } catch {
-    alert('Failed to update status');
+        remark: '',
+      })
+      setShowStatusModal(false)
+      fetchAllCycles()
+    } catch {
+      alert('Failed to update status')
+    }
   }
-};
 
   useEffect(() => {
-    fetchAllCycles();
-  }, []);
+    fetchAllCycles()
+  }, [])
 
   const fetchAllCycles = async () => {
-    setLoading(true);
+    setLoading(true)
     try {
-      const res = await reproductionCycleService.getReproductionCycleList(currentPage,ITEMS_PER_PAGE);
+      const res = await reproductionCycleService.getReproductionCycleList(
+        currentPage,
+        ITEMS_PER_PAGE,
+      )
       console.log(res.data.result)
-      setCycles(res.data.result || []);
+      setCycles(res.data.result || [])
     } catch (e) {
-      setError('Failed to load reproduction cycles');
+      setError('Failed to load reproduction cycles')
     } finally {
-      setLoading(false);
+      setLoading(false)
     }
-  };
+  }
 
   const handleCreateSubmit = async (e) => {
-    e.preventDefault();
+    e.preventDefault()
     try {
-      await reproductionCycleService.createReproductionCycle(createFormData);
-      setShowCreateModal(false);
-      fetchAllCycles();
+      await reproductionCycleService.createReproductionCycle(createFormData)
+      setShowCreateModal(false)
+      fetchAllCycles()
     } catch {
-      alert('Failed to create reproduction cycle');
+      alert('Failed to create reproduction cycle')
     }
-  };
+  }
 
-//    const handleCreateSubmit = async (e) => {
-//     e.preventDefault();
-//     try {
-//       if (isEdit) {
-//         await reproductionCycleService.updateReproductionCycle(createFormData.id, createFormData);
-//       } else {
-//         await reproductionCycleService.createReproductionCycle(createFormData);
-//       }
-//       setShowCreateModal(false);
-//       setIsEdit(false);
-//       fetchAllCycles();
-//     } catch {
-//       alert('Failed to save reproduction cycle');
-//     }
-//   };
+  //    const handleCreateSubmit = async (e) => {
+  //     e.preventDefault();
+  //     try {
+  //       if (isEdit) {
+  //         await reproductionCycleService.updateReproductionCycle(createFormData.id, createFormData);
+  //       } else {
+  //         await reproductionCycleService.createReproductionCycle(createFormData);
+  //       }
+  //       setShowCreateModal(false);
+  //       setIsEdit(false);
+  //       fetchAllCycles();
+  //     } catch {
+  //       alert('Failed to save reproduction cycle');
+  //     }
+  //   };
 
   const fetchHistory = async (animalId) => {
-    setSelectedAnimalId(animalId);
-    setShowHistoryModal(true);
+    setSelectedAnimalId(animalId)
+    setShowHistoryModal(true)
     try {
-      const res = await reproductionCycleService.getHistoryByAnimalId(animalId);
-      setHistoryData(res.data.Result || []);
+      const res = await reproductionCycleService.getHistoryByAnimalId(animalId)
+      setHistoryData(res.data.Result || [])
     } catch {
-      setHistoryData([]);
+      setHistoryData([])
     }
-  };
+  }
 
-const handleEdit = (cycle) => {
-  setCreateFormData({
-    animalId: cycle.animalId,
-    reproductionDate: cycle.cycleStartDate,
-    cycleStatus: cycle.cycleStatus,
-    nextCheckDate: cycle.nextCheckDate || ''
-  });
-  setIsEdit(true);
-  setShowCreateModal(true);
-};
+  const handleEdit = (cycle) => {
+    setCreateFormData({
+      animalId: cycle.animalId,
+      reproductionDate: cycle.cycleStartDate,
+      cycleStatus: cycle.cycleStatus,
+      nextCheckDate: cycle.nextCheckDate || '',
+    })
+    setIsEdit(true)
+    setShowCreateModal(true)
+  }
 
-const handleUpdateStatus = (cycle) => {
-  setSelectedCycleForStatus(cycle);
-  setStatusFormData({
-    cycleStatus: cycle.cycleStatus,
-    nextCheckDate: cycle.nextCheckDate || ''
-  });
-  setShowStatusModal(true);
-};
+  const handleUpdateStatus = (cycle) => {
+    setSelectedCycleForStatus(cycle)
+    setStatusFormData({
+      cycleStatus: cycle.cycleStatus,
+      nextCheckDate: cycle.nextCheckDate || '',
+    })
+    setShowStatusModal(true)
+  }
 
   return (
     <>
@@ -161,34 +164,29 @@ const handleUpdateStatus = (cycle) => {
                     <CTableDataCell>{cycle.tagNumber}</CTableDataCell>
                     <CTableDataCell>{cycle.cycleStartDate}</CTableDataCell>
                     <CTableDataCell>{cycle.cycleStatus}</CTableDataCell>
-                  <CTableDataCell>
-  <CButton
-    size="sm"
-    color="info"
-    onClick={() => fetchHistory(cycle.animalId)}
-    className="me-2"
-  >
-    View History
-  </CButton>
+                    <CTableDataCell>
+                      <CButton
+                        size="sm"
+                        color="primary"
+                        onClick={() => fetchHistory(cycle.animalId)}
+                        className="me-2"
+                      >
+                        View History
+                      </CButton>
 
-  <CButton
-    size="sm"
-    color="warning"
-    className="me-2"
-    onClick={() => handleEdit(cycle)}
-  >
-    Edit
-  </CButton>
+                      <CButton
+                        size="sm"
+                        color="primary"
+                        className="me-2"
+                        onClick={() => handleEdit(cycle)}
+                      >
+                        Edit
+                      </CButton>
 
-  <CButton
-    size="sm"
-    color="secondary"
-    onClick={() => handleUpdateStatus(cycle)}
-  >
-    Update Status
-  </CButton>
-</CTableDataCell>
-
+                      <CButton size="sm" color="primary" onClick={() => handleUpdateStatus(cycle)}>
+                        Update Status
+                      </CButton>
+                    </CTableDataCell>
                   </CTableRow>
                 ))}
               </CTableBody>
@@ -215,14 +213,14 @@ const handleUpdateStatus = (cycle) => {
         selectedAnimalId={selectedAnimalId}
       />
       <StatusUpdateModal
-  visible={showStatusModal}
-  onClose={() => setShowStatusModal(false)}
-  formData={statusFormData}
-  setFormData={setStatusFormData}
-  onSubmit={handleStatusSubmit}
-/>
+        visible={showStatusModal}
+        onClose={() => setShowStatusModal(false)}
+        formData={statusFormData}
+        setFormData={setStatusFormData}
+        onSubmit={handleStatusSubmit}
+      />
     </>
-  );
-};
+  )
+}
 
-export default ReproductionCycleList;
+export default ReproductionCycleList

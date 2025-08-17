@@ -8,7 +8,7 @@ import './scss/style.scss'
 // We use those styles to show code examples, you should remove them in your application.
 import './scss/examples.scss'
 
-import { setupInterceptors } from './axiosInstance'; // Import interceptor setup
+import { setupInterceptors } from './axiosInstance' // Import interceptor setup
 import { FranchiseProvider } from './context/FranchiseContext'
 import Page401 from './views/pages/page401/Page401'
 
@@ -22,14 +22,14 @@ const Page404 = React.lazy(() => import('./views/pages/page404/Page404'))
 const Page500 = React.lazy(() => import('./views/pages/page500/Page500'))
 
 const AxiosInterceptorSetup = () => {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
   useEffect(() => {
-    setupInterceptors(navigate);
-  }, [navigate]);
+    setupInterceptors(navigate)
+  }, [navigate])
 
-  return null; 
-};
+  return null
+}
 
 const App = () => {
   const { isColorModeSet, setColorMode } = useColorModes('coreui-free-react-admin-template-theme')
@@ -52,24 +52,23 @@ const App = () => {
   return (
     <HashRouter>
       <FranchiseProvider>
-      <Suspense
-        fallback={
-          <div className="pt-3 text-center">
-            <CSpinner color="primary" variant="grow" />
-          </div>
-        }
-      >
-        <AxiosInterceptorSetup /> {/* Set up interceptors inside Router */}
-        
-        <Routes>
-          <Route exact path="/login" name="Login Page" element={<Login />} />
-          <Route exact path="/register" name="Register Page" element={<Register />} />
-          <Route exact path="/401" name="Page 401" element={<Page401 />} />
-          <Route exact path="/404" name="Page 404" element={<Page404 />} />
-          <Route exact path="/500" name="Page 500" element={<Page500 />} />
-          <Route path="*" name="Home" element={<DefaultLayout />} />
-        </Routes>
-      </Suspense>
+        <Suspense
+          fallback={
+            <div className="pt-3 text-center">
+              <CSpinner color="primary" variant="grow" />
+            </div>
+          }
+        >
+          <AxiosInterceptorSetup /> {/* Set up interceptors inside Router */}
+          <Routes>
+            <Route exact path="/login" name="Login Page" element={<Login />} />
+            <Route exact path="/register" name="Register Page" element={<Register />} />
+            <Route exact path="/401" name="Page 401" element={<Page401 />} />
+            <Route exact path="/404" name="Page 404" element={<Page404 />} />
+            <Route exact path="/500" name="Page 500" element={<Page500 />} />
+            <Route path="*" name="Home" element={<DefaultLayout />} />
+          </Routes>
+        </Suspense>
       </FranchiseProvider>
     </HashRouter>
   )

@@ -20,7 +20,7 @@ const CreateReproductionCycleModal = ({
   formData,
   setFormData,
   onSubmit,
-  mode = 'create', 
+  mode = 'create',
 }) => {
   const [animalTags, setAnimalTags] = useState([])
 
@@ -47,7 +47,7 @@ const CreateReproductionCycleModal = ({
 
   const handleChange = (e) => {
     const { name, value } = e.target
-    setFormData(prev => ({ ...prev, [name]: value }))
+    setFormData((prev) => ({ ...prev, [name]: value }))
   }
 
   return (
@@ -57,7 +57,6 @@ const CreateReproductionCycleModal = ({
       </CModalHeader>
       <CModalBody>
         <CForm onSubmit={onSubmit}>
-
           {/* Animal Tag Dropdown */}
           <CRow className="mb-3">
             <CCol>
@@ -69,7 +68,7 @@ const CreateReproductionCycleModal = ({
                 required
               >
                 <option value="">Select Animal Tag</option>
-                {animalTags.map(animal => (
+                {animalTags.map((animal) => (
                   <option key={animal.id} value={animal.id}>
                     {animal.tagNumber}
                   </option>

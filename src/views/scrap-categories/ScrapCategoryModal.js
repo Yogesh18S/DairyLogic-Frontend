@@ -6,7 +6,7 @@ import {
   CModal,
   CModalBody,
   CModalHeader,
-  CModalTitle
+  CModalTitle,
 } from '@coreui/react'
 import { useState } from 'react'
 

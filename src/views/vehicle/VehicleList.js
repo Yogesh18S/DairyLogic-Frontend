@@ -28,15 +28,15 @@ const VehicleList = () => {
     registrationNumber: '',
     model: '',
     description: '',
-    isActive: true
+    isActive: true,
   })
 
   const fetchData = async () => {
     try {
       const response = await vehicleService.getVehicleList(currentPage, ITEMS_PER_PAGE)
-      const formattedData = response.data.result.map(vehicle => ({
+      const formattedData = response.data.result.map((vehicle) => ({
         ...vehicle,
-        isActive: vehicle.isActive ? 'Active' : 'Inactive'
+        isActive: vehicle.isActive ? 'Active' : 'Inactive',
       }))
       setData(formattedData)
       setTotalRecords(response.data.pagedListMetadata.totalRecords)
@@ -55,7 +55,7 @@ const VehicleList = () => {
   }
 
   const handleEdit = (id) => {
-    const itemToEdit = data.find(item => item.id === id)
+    const itemToEdit = data.find((item) => item.id === id)
     const isActiveBool = itemToEdit.isActive === 'Active'
     setFormData({ ...itemToEdit, isActive: isActiveBool })
     setEditMode(true)
@@ -112,10 +112,10 @@ const VehicleList = () => {
           </CCardHeader>
           <CCardBody>
             <AppPaginatedTable
-               columns={[
-            { label: 'Vehicle No', accessor: 'vehicleNo' },  // <-- Update label here
-            { label: 'Status', accessor: 'isActive' }
-               ]}
+              columns={[
+                { label: 'Vehicle No', accessor: 'vehicleNo' }, // <-- Update label here
+                { label: 'Status', accessor: 'isActive' },
+              ]}
               data={data}
               currentPage={currentPage}
               itemsPerPage={ITEMS_PER_PAGE}

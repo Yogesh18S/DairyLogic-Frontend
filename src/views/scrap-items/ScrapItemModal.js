@@ -7,7 +7,7 @@ import {
   CModal,
   CModalBody,
   CModalHeader,
-  CModalTitle
+  CModalTitle,
 } from '@coreui/react'
 import { useEffect, useState } from 'react'
 import scrapCategoryService from '../../services/scrapCategoryService'
@@ -31,7 +31,7 @@ const ScrapItemModal = ({ visible, onClose, onSave, formData, setFormData, editM
     setFormData((prevState) => ({ ...prevState, [name]: value }))
   }
 
-  const handleFileChange = (e)=>{
+  const handleFileChange = (e) => {
     const file = e.target.files[0]
     setFormData((prevState) => ({ ...prevState, image: file }))
   }
@@ -61,7 +61,12 @@ const ScrapItemModal = ({ visible, onClose, onSave, formData, setFormData, editM
         <CModalTitle>{editMode ? 'Edit Scrap Item' : 'Create New Scrap Item'}</CModalTitle>
       </CModalHeader>
       <CModalBody>
-        <CForm noValidate validated={validated} onSubmit={handleSubmit} className='d-flex flex-column gap-2'>
+        <CForm
+          noValidate
+          validated={validated}
+          onSubmit={handleSubmit}
+          className="d-flex flex-column gap-2"
+        >
           <div>
             <CFormLabel>Category</CFormLabel>
             <CFormSelect
@@ -120,7 +125,7 @@ const ScrapItemModal = ({ visible, onClose, onSave, formData, setFormData, editM
               required
             />
           </div>
-          <div className = "d-flex gap-2 flex-row-reverse mt-2">
+          <div className="d-flex gap-2 flex-row-reverse mt-2">
             <CButton color="secondary" onClick={onClose}>
               Cancel
             </CButton>

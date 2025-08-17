@@ -13,24 +13,17 @@ import {
 } from '@coreui/react'
 import vehicleService from '../../services/vehicleService' // Assume you have this service
 
-const dailyVehicleLoadModal = ({
-  visible,
-  onClose,
-  onSave,
-  formData,
-  setFormData,
-  editMode,
-}) => {
-     const [vehicleList, setVehicleList] = useState([])
-useEffect(() => {
-  if (!editMode) {
-    const today = new Date().toISOString().split('T')[0];
-    setFormData((prev) => ({
-      ...prev,
-      deliveryDate: today,
-    }));
-  }
-}, [visible, editMode]);
+const dailyVehicleLoadModal = ({ visible, onClose, onSave, formData, setFormData, editMode }) => {
+  const [vehicleList, setVehicleList] = useState([])
+  useEffect(() => {
+    if (!editMode) {
+      const today = new Date().toISOString().split('T')[0]
+      setFormData((prev) => ({
+        ...prev,
+        deliveryDate: today,
+      }))
+    }
+  }, [visible, editMode])
 
   useEffect(() => {
     const fetchVehicles = async () => {
@@ -117,7 +110,6 @@ useEffect(() => {
               required
             />
           </div>
-
         </CModalBody>
         <CModalFooter>
           <CButton color="primary" type="submit">

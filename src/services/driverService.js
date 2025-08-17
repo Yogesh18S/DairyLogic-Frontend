@@ -1,32 +1,32 @@
-import axiosInstance from "../axiosInstance";
+import axiosInstance from '../axiosInstance'
 
 const driverService = {
-       getAllDriverList: () => {
-        return axiosInstance.get("/Driver/GetAll");
-    },
-    getDriverList: (page, size) => {
-        return axiosInstance.get(`/Driver/?PageNumber=${page}&PageSize=${size}`);
-    },
+  getAllDriverList: () => {
+    return axiosInstance.get('/Driver/GetAll')
+  },
+  getDriverList: (page, size) => {
+    return axiosInstance.get(`/Driver/?PageNumber=${page}&PageSize=${size}`)
+  },
 
-    getDriverById: (id) => {
-        return axiosInstance.get(`/Driver/${id}`);
-    },
+  getDriverById: (id) => {
+    return axiosInstance.get(`/Driver/${id}`)
+  },
 
-    createDriver: (driver) => {
-        return axiosInstance.post("/Driver/Post", driver);
-    },
+  createDriver: (driver) => {
+    return axiosInstance.post('/Driver/Post', driver)
+  },
 
-    updateDriver: (id, driver) => {
-        return axiosInstance.put(`/Driver?id=${id}`, driver);
-    },
+  updateDriver: (id, driver) => {
+    return axiosInstance.put(`/Driver?id=${id}`, driver)
+  },
 
-    deleteDriver: (id) => {
-        return axiosInstance.delete(`/Driver/${id}`);
-    },
+  deleteDriver: (id) => {
+    return axiosInstance.delete(`/Driver/${id}`)
+  },
 
-    toggleIsActive: (id) => {
-        return axiosInstance.put(`/Driver/ToggleIsActiveAsync?id=${id}`);
-    },
-};
+  toggleIsActive: (id) => {
+    return axiosInstance.put(`/Driver/ToggleIsActiveAsync?id=${id}`)
+  },
+}
 
-export default driverService;
+export default driverService

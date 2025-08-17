@@ -1,25 +1,25 @@
-import axiosInstance from "../axiosInstance";
+import axiosInstance from '../axiosInstance'
 
 const deliveryDetailsService = {
-    getDeliveryDetail: (page, size) => {
-        return axiosInstance.get(`/DriverDetails/?PageNumber=${page}&PageSize=${size}`);
-    },
+  getDeliveryDetail: (page, size) => {
+    return axiosInstance.get(`/DeliveryDetails/?PageNumber=${page}&PageSize=${size}`)
+  },
 
-    getDeliveryDetailsById: (id) => {
-        return axiosInstance.get(`/DeliveryDetails/${id}`);
-    },
+  getDeliveryDetailsById: (id) => {
+    return axiosInstance.get(`/DeliveryDetails/${id}`)
+  },
 
-    createDeliveryDetails: (data) => {
-        return axiosInstance.post("/DeliveryDetails", data);
-    },
+  createDeliveryDetails: (data) => {
+    return axiosInstance.post('/DeliveryDetails', data)
+  },
 
-    updateDeliveryDetails: (id, data) => {
-        return axiosInstance.put(`/DeliveryDetails/${id}`, data);
-    },
+  updateDeliveryDetails: (id, data) => {
+    return axiosInstance.put(`/DeliveryDetails/${id}`, data)
+  },
 
-    deleteDeliveryDetails: (id) => {
-        return axiosInstance.delete(`/DeliveryDetails/${id}`);
-    },
-};
+  deleteDeliveryDetails: (id) => {
+    return axiosInstance.delete(`/DeliveryDetails/${id}`)
+  },
+}
 
-export default deliveryDetailsService;
+export default deliveryDetailsService

@@ -1,10 +1,28 @@
-import { CModal, CModalHeader, CModalBody, CModalFooter, CButton, CForm, CFormSelect } from '@coreui/react';
+import {
+  CModal,
+  CModalHeader,
+  CModalBody,
+  CModalFooter,
+  CButton,
+  CForm,
+  CFormSelect,
+} from '@coreui/react'
 
-const DriverDetailsModal = ({ visible, onClose, onSave, formData, setFormData, editMode, vehicles, routes, drivers }) => {
+const DriverDetailsModal = ({
+  visible,
+  onClose,
+  onSave,
+  formData,
+  setFormData,
+  editMode,
+  vehicles,
+  routes,
+  drivers,
+}) => {
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  };
+    const { name, value } = e.target
+    setFormData((prev) => ({ ...prev, [name]: value }))
+  }
 
   return (
     <CModal backdrop="static" visible={visible} onClose={onClose}>
@@ -65,7 +83,7 @@ const DriverDetailsModal = ({ visible, onClose, onSave, formData, setFormData, e
         </CButton>
       </CModalFooter>
     </CModal>
-  );
-};
+  )
+}
 
-export default DriverDetailsModal;
+export default DriverDetailsModal

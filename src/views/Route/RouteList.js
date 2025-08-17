@@ -27,7 +27,7 @@ const RouteList = () => {
     id: '',
     name: '',
     description: '',
-    isActive: true
+    isActive: true,
   })
 
   const fetchData = async () => {
@@ -114,7 +114,7 @@ const RouteList = () => {
               columns={[
                 { label: 'Name', accessor: 'name' },
                 { label: 'Description', accessor: 'description' },
-                { label: 'Status', accessor: 'isActive' }
+                { label: 'Status', accessor: 'isActive' },
               ]}
               data={data}
               currentPage={currentPage}

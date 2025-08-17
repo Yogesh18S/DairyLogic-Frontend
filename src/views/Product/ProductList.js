@@ -1,5 +1,5 @@
 // src/pages/Product/ProductList.js
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useState } from 'react'
 import {
   CCard,
   CCardBody,
@@ -9,13 +9,13 @@ import {
   CButton,
   CAlert,
   CAlertHeading,
-} from "@coreui/react"
+} from '@coreui/react'
 
-import { ITEMS_PER_PAGE } from "../../constants/globalConstants"
-import AppPaginatedTable from "../../components/table/AppPaginatedTable"
-import AppLoadingSpinner from "../../components/AppLoadingSpinner"
-import productService from "../../services/productService"
-import ProductModal from "./ProductModal"
+import { ITEMS_PER_PAGE } from '../../constants/globalConstants'
+import AppPaginatedTable from '../../components/table/AppPaginatedTable'
+import AppLoadingSpinner from '../../components/AppLoadingSpinner'
+import productService from '../../services/productService'
+import ProductModal from './ProductModal'
 
 const ProductList = () => {
   const [data, setData] = useState([])
@@ -27,14 +27,12 @@ const ProductList = () => {
   const [modalVisible, setModalVisible] = useState(false)
   const [editMode, setEditMode] = useState(false)
   const [formData, setFormData] = useState({
-    id: "",
-    name: "",
-    description: "",
-    unit: "",
-    basePrice: "",
+    id: '',
+    name: '',
+    description: '',
+    unit: '',
+    basePrice: '',
   })
-
-
 
   const fetchData = async () => {
     setLoading(true)
@@ -44,8 +42,8 @@ const ProductList = () => {
       setData(products)
       setTotalRecords(response.data.pagedListMetadata?.totalRecords || 0)
     } catch (error) {
-      console.error("API error:", error)
-      setError("Failed to fetch products. Please try again.")
+      console.error('API error:', error)
+      setError('Failed to fetch products. Please try again.')
     } finally {
       setLoading(false)
     }
@@ -53,11 +51,11 @@ const ProductList = () => {
 
   const handleCreate = () => {
     setFormData({
-      id: "",
-      name: "",
-      description: "",
-      unit: "",
-      basePrice: "",
+      id: '',
+      name: '',
+      description: '',
+      unit: '',
+      basePrice: '',
     })
     setEditMode(false)
     setModalVisible(true)
@@ -75,13 +73,13 @@ const ProductList = () => {
   }
 
   const handleDelete = async (id) => {
-    if (!window.confirm("Are you sure you want to delete this product?")) return
+    if (!window.confirm('Are you sure you want to delete this product?')) return
     try {
       await productService.deleteProduct(id)
       fetchData()
     } catch (err) {
-      console.error("Delete error:", err)
-      setError("Failed to delete product.")
+      console.error('Delete error:', err)
+      setError('Failed to delete product.')
     }
   }
 
@@ -95,8 +93,8 @@ const ProductList = () => {
       setModalVisible(false)
       fetchData()
     } catch (err) {
-      console.error("Save error:", err)
-      setError("Failed to save product.")
+      console.error('Save error:', err)
+      setError('Failed to save product.')
     }
   }
 
@@ -126,10 +124,10 @@ const ProductList = () => {
           <CCardBody>
             <AppPaginatedTable
               columns={[
-                { label: "Name", accessor: "name" },
-                { label: "Description", accessor: "description" },
-                { label: "Unit", accessor: "unit" },
-                { label: "Base Price", accessor: "basePrice" },
+                { label: 'Name', accessor: 'name' },
+                { label: 'Description', accessor: 'description' },
+                { label: 'Unit', accessor: 'unit' },
+                { label: 'Base Price', accessor: 'basePrice' },
               ]}
               data={data}
               currentPage={currentPage}
@@ -137,8 +135,8 @@ const ProductList = () => {
               totalRecords={totalRecords}
               onPageChange={setCurrentPage}
               actionButtons={[
-                { label: "Edit", onClick: handleEdit },
-                { label: "Delete", onClick: handleDelete },
+                { label: 'Edit', onClick: handleEdit },
+                { label: 'Delete', onClick: handleDelete },
               ]}
             />
           </CCardBody>
