@@ -37,7 +37,7 @@ const CustomerList = () => {
 
   const navigate = useNavigate()
   const handleCreateNew = () => {
-    navigate('/create-customer') // or your desired route
+    navigate('/create-customer')
   }
 
   const handleEdit = (id) => {
@@ -87,6 +87,7 @@ const CustomerList = () => {
 
   const handleTransactionHistory = (customer) => {
     console.log(customer)
+    navigate(`/transaction-history/${customer}`)
   }
 
   const handleSave = async () => {

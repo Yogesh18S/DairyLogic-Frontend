@@ -39,9 +39,14 @@ const invoiceService = {
     return axiosInstance.delete(`/Invoice/${id}`)
   },
 
-  generateInvoices: (generateRequest) => {
-    return axiosInstance.post('/Invoice/generate', generateRequest)
+  generateInvoices: (month, year) => {
+    return axiosInstance.get(`/Invoice/GenerateInvoices`, {
+      params: { month, year },
+    })
+    //    return axiosInstance.get(`/Invoice/GenerateInvoices?month=${month}&year=${year}`)
   },
+  // return axiosInstance.get('/Invoice/GenerateInvoices', { params: generateRequest })
+  //return axiosInstance.get('/Invoice/GenerateInvoices', generateRequest)
 
   getInvoiceSummary: (filterRequest) => {
     return axiosInstance.post('/Invoice/summary', filterRequest)

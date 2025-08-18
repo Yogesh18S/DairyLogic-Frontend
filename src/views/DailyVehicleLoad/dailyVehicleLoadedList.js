@@ -6,6 +6,7 @@ import {
   CCardBody,
   CCardHeader,
   CCol,
+  CFormInput,
   CRow,
 } from '@coreui/react'
 import { useEffect, useState } from 'react'
@@ -23,6 +24,7 @@ const dailyVehicleLoadList = () => {
   const [error, setError] = useState(null)
   const [modalVisible, setModalVisible] = useState(false)
   const [editMode, setEditMode] = useState(false)
+  const [searchDate, setSearchDate] = useState('')
   const [formData, setFormData] = useState({
     id: '',
     vehicleId: '',
@@ -33,11 +35,13 @@ const dailyVehicleLoadList = () => {
     variance: '',
   })
 
+
   const fetchData = async () => {
     try {
       const response = await dailyVehicleLoadService.getDailyVehicleLoadedList(
         currentPage,
         ITEMS_PER_PAGE,
+        searchDate,
       )
       console.log(response)
       const formattedData = response.data.result.map((item) => ({
@@ -101,9 +105,11 @@ const dailyVehicleLoadList = () => {
     }
   }
 
+  const UpdateLoadedStatus = () => {}
+
   useEffect(() => {
     fetchData()
-  }, [currentPage])
+  }, [currentPage, searchDate])
 
   if (loading) return <AppLoadingSpinner />
 
@@ -119,6 +125,16 @@ const dailyVehicleLoadList = () => {
         <CCard>
           <CCardHeader className="d-flex align-items-center justify-content-between">
             <strong>Daily Vehicle Loads</strong>
+            <CFormInput
+              type="date"
+              value={searchDate}
+              onChange={(e) => {
+                setSearchDate(e.target.value)
+                setCurrentPage(1) // reset pagination when date changes
+              }}
+              style={{ maxWidth: '250px' }}
+            />
+
             <CButton color="primary" onClick={handleCreateNew}>
               Create New
             </CButton>
@@ -141,6 +157,7 @@ const dailyVehicleLoadList = () => {
               actionButtons={[
                 { label: 'Edit', onClick: handleEdit },
                 { label: 'Delete', onClick: handleDelete },
+                { label: 'Update Load Status', onclick: (row) => UpdateLoadedStatus(row) },
               ]}
             />
           </CCardBody>

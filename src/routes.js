@@ -1,3 +1,4 @@
+import { element } from 'prop-types'
 import React from 'react'
 
 const Dashboard = React.lazy(() => import('./views/dashboard/Dashboard'))
@@ -18,6 +19,8 @@ const Product = React.lazy(() => import('./views/Product/ProductList.js'))
 const CreateCustomer = React.lazy(() => import('./views/Customer/CreateCustomer.js'))
 const ReproductionCycle = React.lazy(() => import('./views/Reproduction/ReproductionCycleList.js'))
 const Invoice = React.lazy(() => import('./views/Invoice/InvoiceList.js'))
+const TransactionHistory = React.lazy(() => import('./views/Customer/Transactionhistory.js'))
+const InvoiceGenerate = React.lazy(() => import('./views/Invoice/InvoiceGenerate.js'))
 
 const routes = [
   { path: '/', exact: true, name: 'Home' },
@@ -35,7 +38,8 @@ const routes = [
   { path: '/create-customer', name: 'Create Customer', element: CreateCustomer },
   { path: '/reproductionCycle', name: 'ReproductionCycle', element: ReproductionCycle },
   { path: '/Invoice', name: 'Invoice', element: Invoice },
-
+  { path: '/transaction-history/:id', name: 'TransactionHistory', element: TransactionHistory },
+  { path: '/invoice/genrate-invoice', name: 'InvoiceGenerate', element: InvoiceGenerate },
 ]
 
 export default routes

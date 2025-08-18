@@ -1,8 +1,15 @@
 import axiosInstance from '../axiosInstance'
 
 const dailyVehicleLoadedService = {
-  getDailyVehicleLoadedList: (page, size) => {
-    return axiosInstance.get(`/DailyVehicleLoad/?PageNumber=${page}&PageSize=${size}`)
+  getDailyVehicleLoadedList: (page, size, date) => {
+    console.log(date)
+    return axiosInstance.get(`/DailyVehicleLoad`, {
+      params: {
+        PageNumber: page,
+        PageSize: size,
+        Date: date,
+      },
+    })
   },
 
   getDailyVehicleLoadedById: (id) => {

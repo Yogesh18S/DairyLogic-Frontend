@@ -13,7 +13,7 @@ import {
   CFormSelect,
   CButton,
 } from '@coreui/react'
-
+import { useNavigate } from 'react-router-dom'
 import { ITEMS_PER_PAGE } from '../../constants/globalConstants'
 import AppPaginatedTable from '../../components/table/AppPaginatedTable'
 import AppLoadingSpinner from '../../components/AppLoadingSpinner'
@@ -31,7 +31,7 @@ const InvoiceList = () => {
     fromDate: '',
     toDate: '',
   })
-
+  const navigate = useNavigate()
   const fetchData = async () => {
     setLoading(true)
     try {
@@ -46,6 +46,7 @@ const InvoiceList = () => {
         toDate: filters.toDate,
       })
       const invoices = response.data.result || [] // assuming backend returns { result: { items, totalRecords } }
+      console.log(response.data.result)
       setData(invoices)
       setTotalRecords(response.data.result.totalRecords || 0)
     } catch (error) {
@@ -67,6 +68,10 @@ const InvoiceList = () => {
     fetchData()
   }
 
+  const handelgenrate = () => {
+    navigate('/invoice/genrate-invoice')
+  }
+
   useEffect(() => {
     fetchData()
   }, [currentPage])
@@ -86,6 +91,9 @@ const InvoiceList = () => {
         <CCard className="mt-3">
           <CCardHeader className="d-flex justify-content-between align-items-center">
             <strong>Invoices List</strong>
+            <CButton color="primary" onClick={handelgenrate}>
+              Genrate Invoice
+            </CButton>
           </CCardHeader>
           <CCardBody>
             <CForm className="row g-3" onSubmit={handleFilterSubmit}>
