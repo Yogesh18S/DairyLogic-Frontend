@@ -7,6 +7,8 @@ import {
   CCardHeader,
   CCol,
   CRow,
+  CFormInput,
+  CFormSelect,
 } from '@coreui/react'
 import { useEffect, useState } from 'react'
 import AppLoadingSpinner from '../../components/AppLoadingSpinner'
@@ -29,9 +31,20 @@ const DeliveryDetailsList = () => {
     status: '',
   })
 
+  const [filters, setFilters] = useState({
+    customerName: '',
+    routeName: '',
+    status: '',
+    date: '',
+  })
+
   const fetchData = async () => {
     try {
-      const response = await deliveryDetailsService.getDeliveryDetail(currentPage, ITEMS_PER_PAGE)
+      const response = await deliveryDetailsService.getDeliveryDetail(
+        currentPage,
+        ITEMS_PER_PAGE,
+        filters,
+      )
       console.log(response)
       const formattedData = response.data.result.map((driver) => ({
         ...driver,
@@ -85,9 +98,55 @@ const DeliveryDetailsList = () => {
           </CAlert>
         )}
         <CCard>
+          {/* <CCardHeader className="d-flex align-items-center justify-content-between">
+            <strong>Delivery Details</strong>
+          </CCardHeader> */}
           <CCardHeader className="d-flex align-items-center justify-content-between">
             <strong>Delivery Details</strong>
+
+            <div className="d-flex gap-2">
+              <CFormInput
+                type="text"
+                placeholder="Customer"
+                value={filters.customerName}
+                onChange={(e) => setFilters({ ...filters, customerName: e.target.value })}
+              />
+
+              <CFormInput
+                type="text"
+                placeholder="Route"
+                value={filters.routeName}
+                onChange={(e) => setFilters({ ...filters, routeName: e.target.value })}
+              />
+
+              <CFormSelect
+                value={filters.status}
+                onChange={(e) => setFilters({ ...filters, status: e.target.value })}
+              >
+                <option value="">All</option>
+                <option value="Pending">Pending</option>
+                <option value="Delivered">Delivered</option>
+                <option value="Cancelled">Cancelled</option>
+              </CFormSelect>
+
+              <CFormInput
+                type="date"
+                value={filters.date}
+                onChange={(e) => setFilters({ ...filters, date: e.target.value })}
+              />
+
+              <CButton
+                color="primary"
+                onClick={() => {
+                  setCurrentPage(1)
+                  fetchData()
+                }}
+              >
+                Search
+              </CButton>
+            </div>
           </CCardHeader>
+
           <CCardBody>
             <AppPaginatedTable
               columns={[
