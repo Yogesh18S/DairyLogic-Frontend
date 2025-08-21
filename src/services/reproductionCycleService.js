@@ -12,8 +12,9 @@ const reproductionCycleService = {
   },
 
   // Get by ID
-  getReproductionCycleById: (id) => {
-    return axiosInstance.get(`/ReproductionCycle/${id}`)
+  getReproductionCycleById: (page, size, id) => {
+    return axiosInstance.get(`/ReproductionStatusLog?PageNumber=${page}&PageSize=${size}&animalId=${id}`)
+    
   },
 
   // Create

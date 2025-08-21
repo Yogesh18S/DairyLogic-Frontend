@@ -46,7 +46,7 @@ const StatusUpdateModal = ({ visible, onClose, formData, setFormData, onSubmit }
             onChange={handleChange}
           />
 
-          <CButton type="submit" color="success" className="mt-3">
+          <CButton type="submit" color="primary" className="mt-3">
             Update
           </CButton>
         </CForm>

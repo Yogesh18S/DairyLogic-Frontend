@@ -14,28 +14,32 @@ import {
   CTableDataCell,
 } from '@coreui/react'
 
-const HistoryModal = ({ visible, onClose, historyData, selectedAnimalId }) => {
+const HistoryModal = ({ visible, onClose, historyData = [], selectedAnimalId }) => {
   return (
-    <CModal visible={visible} onClose={onClose} size="lg">
+    <CModal visible={visible} onClose={onClose} aria-labelledby="history-modal-title" size="lg">
       <CModalHeader closeButton>
-        <CModalTitle>History for Animal ID: {selectedAnimalId}</CModalTitle>
+        <CModalTitle id="history-modal-title">
+          History for Animal Tag Number: {historyData.tagNumber}
+        </CModalTitle>
       </CModalHeader>
       <CModalBody>
         {historyData.length === 0 ? (
-          <p>No history found.</p>
+          <div className="text-center text-muted">No history found</div>
         ) : (
           <CTable striped hover responsive>
             <CTableHead>
               <CTableRow>
-                <CTableHeaderCell>Date</CTableHeaderCell>
+                <CTableHeaderCell>Action Date</CTableHeaderCell>
                 <CTableHeaderCell>Status</CTableHeaderCell>
+                <CTableHeaderCell>Next Chec kDate</CTableHeaderCell>
               </CTableRow>
             </CTableHead>
             <CTableBody>
               {historyData.map((log, index) => (
                 <CTableRow key={index}>
-                  <CTableDataCell>{log.date}</CTableDataCell>
+                  <CTableDataCell>{log.actionDate}</CTableDataCell>
                   <CTableDataCell>{log.status}</CTableDataCell>
+                  <CTableDataCell>{log.nextCheckDate}</CTableDataCell>
                 </CTableRow>
               ))}
             </CTableBody>

@@ -80,10 +80,10 @@ const CreateReproductionCycleModal = ({
           {/* Reproduction Date */}
           <CRow className="mb-3">
             <CCol>
-              <CFormLabel>Reproduction Date</CFormLabel>
+              <CFormLabel>Cycle Date</CFormLabel>
               <CFormInput
                 type="date"
-                name="cycleStartDate"
+                name="actionDate"
                 value={formData.cycleStartDate || ''}
                 onChange={handleChange}
                 required
@@ -123,7 +123,7 @@ const CreateReproductionCycleModal = ({
             </CCol>
           </CRow>
 
-          <CButton type="submit" color="success">
+          <CButton type="submit" color="primary">
             {mode === 'create' ? 'Create' : 'Update'}
           </CButton>
         </CForm>

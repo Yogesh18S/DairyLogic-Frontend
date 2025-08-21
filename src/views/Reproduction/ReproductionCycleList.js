@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import {
   CButton,
   CCard,
@@ -62,6 +62,7 @@ const ReproductionCycleList = () => {
         ITEMS_PER_PAGE,
       )
       console.log(res.data.result)
+      //setTotalPages(res.data.totalPages)
       setCycles(res.data.result || [])
     } catch (e) {
       setError('Failed to load reproduction cycles')
@@ -70,50 +71,57 @@ const ReproductionCycleList = () => {
     }
   }
 
+  // const handleCreateSubmit = async (e) => {
+  //   e.preventDefault()
+  //   try {
+  //     await reproductionCycleService.createReproductionCycle(createFormData)
+  //     setShowCreateModal(false)
+  //     fetchAllCycles()
+  //   } catch {
+  //     alert('Failed to create reproduction cycle')
+  //   }
+  // }
+
   const handleCreateSubmit = async (e) => {
     e.preventDefault()
+    console.log('isEdit', isEdit)
     try {
-      await reproductionCycleService.createReproductionCycle(createFormData)
+      if (isEdit) {
+        console.log('Updating Cycle', createFormData)
+        console.log('Id', createFormData.id)
+        await reproductionCycleService.updateReproductionCycle(createFormData.id, createFormData)
+      } else {
+        await reproductionCycleService.createReproductionCycle(createFormData)
+      }
       setShowCreateModal(false)
+      setIsEdit(false)
       fetchAllCycles()
     } catch {
-      alert('Failed to create reproduction cycle')
+      alert('Failed to save reproduction cycle')
     }
   }
 
-  //    const handleCreateSubmit = async (e) => {
-  //     e.preventDefault();
-  //     try {
-  //       if (isEdit) {
-  //         await reproductionCycleService.updateReproductionCycle(createFormData.id, createFormData);
-  //       } else {
-  //         await reproductionCycleService.createReproductionCycle(createFormData);
-  //       }
-  //       setShowCreateModal(false);
-  //       setIsEdit(false);
-  //       fetchAllCycles();
-  //     } catch {
-  //       alert('Failed to save reproduction cycle');
-  //     }
-  //   };
-
-  const fetchHistory = async (animalId) => {
-    setSelectedAnimalId(animalId)
+  const fetchHistory = async (id) => {
+    console.log('Animal Id', id)
+    setSelectedAnimalId(id)
     setShowHistoryModal(true)
     try {
-      const res = await reproductionCycleService.getHistoryByAnimalId(animalId)
-      setHistoryData(res.data.Result || [])
+      const res = await reproductionCycleService.getReproductionCycleById(1, 10, id)
+      console.log(res.data.result)
+      setHistoryData(res.data.result || [])
     } catch {
-      setHistoryData([])
+      // setHistoryData([])
     }
   }
 
   const handleEdit = (cycle) => {
     setCreateFormData({
+      id: cycle.id,
       animalId: cycle.animalId,
-      reproductionDate: cycle.cycleStartDate,
+      cycleStartDate: cycle.cycleStartDate,
       cycleStatus: cycle.cycleStatus,
       nextCheckDate: cycle.nextCheckDate || '',
+      actionDate: cycle.actionDate,
     })
     setIsEdit(true)
     setShowCreateModal(true)
@@ -168,7 +176,7 @@ const ReproductionCycleList = () => {
                       <CButton
                         size="sm"
                         color="primary"
-                        onClick={() => fetchHistory(cycle.animalId)}
+                        onClick={() => fetchHistory(cycle.id)}
                         className="me-2"
                       >
                         View History
