@@ -27,6 +27,10 @@ const dailyVehicleLoadedService = {
   deleteDailyVehicleLoaded: (id) => {
     return axiosInstance.delete(`/DailyVehicleLoad?id=${id}`)
   },
+
+  UpdateStatusByAdmin: (data) => {
+    return axiosInstance.post(`/DailyVehicleLoad/UpdateStatus`, data)
+  },
 }
 
 export default dailyVehicleLoadedService

@@ -104,7 +104,7 @@ const DeliverySequenceManager = () => {
         <CCardHeader>Select Route</CCardHeader>
         <CCardBody>
           <CFormSelect
-            size="sm"
+            size="md"
             className="w-50"
             onChange={(e) => {
               setSelectedRouteId(e.target.value)

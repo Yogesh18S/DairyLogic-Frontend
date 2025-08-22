@@ -15,6 +15,7 @@ import AppPaginatedTable from '../../components/table/AppPaginatedTable'
 import { ITEMS_PER_PAGE } from '../../constants/globalConstants'
 import dailyVehicleLoadService from '../../services/dailyVehicleLoadedService'
 import DailyVehicleLoadModal from './dailyVehicleLoadModal'
+import UpdateLoadedStatusModal from './updateLoadedStatusModal'
 
 const dailyVehicleLoadList = () => {
   const [data, setData] = useState([])
@@ -35,6 +36,11 @@ const dailyVehicleLoadList = () => {
     variance: '',
   })
 
+  const [updateModalVisible, setUpdateModalVisible] = useState(false)
+  const [updateFormData, setUpdateFormData] = useState({
+    id: '',
+    remainingQuantity: 0,
+  })
 
   const fetchData = async () => {
     try {
@@ -105,7 +111,16 @@ const dailyVehicleLoadList = () => {
     }
   }
 
-  const UpdateLoadedStatus = () => {}
+  const UpdateLoadedStatus = (id) => {
+    const row = data.find((item) => item.id === id)
+    console.log('Updating loaded status', row)
+    setUpdateFormData({
+      id: row.id,
+      remainingQuantity: row.remainingQuantity || 0,
+    })
+    console.log('searchDate', updateFormData)
+    setUpdateModalVisible(true)
+  }
 
   useEffect(() => {
     fetchData()
@@ -157,7 +172,7 @@ const dailyVehicleLoadList = () => {
               actionButtons={[
                 { label: 'Edit', onClick: handleEdit },
                 { label: 'Delete', onClick: handleDelete },
-                { label: 'Update Load Status', onclick: (row) => UpdateLoadedStatus(row) },
+                { label: 'Update Load Status', onClick: (row) => UpdateLoadedStatus(row) },
               ]}
             />
           </CCardBody>
@@ -171,6 +186,14 @@ const dailyVehicleLoadList = () => {
         formData={formData}
         setFormData={setFormData}
         editMode={editMode}
+      />
+
+      <UpdateLoadedStatusModal
+        visible={updateModalVisible}
+        onClose={() => setUpdateModalVisible(false)}
+        dailyVehicleLoadId={updateFormData.id}
+        initialRemainingQty={updateFormData.remainingQuantity}
+        onQuantityUpdated={fetchData}
       />
     </CRow>
   )
