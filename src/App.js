@@ -9,7 +9,7 @@ import './scss/style.scss'
 import './scss/examples.scss'
 
 import { setupInterceptors } from './axiosInstance' // Import interceptor setup
-import { FranchiseProvider } from './context/FranchiseContext'
+
 import Page401 from './views/pages/page401/Page401'
 
 // Containers
@@ -51,25 +51,23 @@ const App = () => {
 
   return (
     <HashRouter>
-      <FranchiseProvider>
-        <Suspense
-          fallback={
-            <div className="pt-3 text-center">
-              <CSpinner color="primary" variant="grow" />
-            </div>
-          }
-        >
-          <AxiosInterceptorSetup /> {/* Set up interceptors inside Router */}
-          <Routes>
-            <Route exact path="/login" name="Login Page" element={<Login />} />
-            <Route exact path="/register" name="Register Page" element={<Register />} />
-            <Route exact path="/401" name="Page 401" element={<Page401 />} />
-            <Route exact path="/404" name="Page 404" element={<Page404 />} />
-            <Route exact path="/500" name="Page 500" element={<Page500 />} />
-            <Route path="*" name="Home" element={<DefaultLayout />} />
-          </Routes>
-        </Suspense>
-      </FranchiseProvider>
+      <Suspense
+        fallback={
+          <div className="pt-3 text-center">
+            <CSpinner color="primary" variant="grow" />
+          </div>
+        }
+      >
+        <AxiosInterceptorSetup /> {/* Set up interceptors inside Router */}
+        <Routes>
+          <Route exact path="/login" name="Login Page" element={<Login />} />
+          <Route exact path="/register" name="Register Page" element={<Register />} />
+          <Route exact path="/401" name="Page 401" element={<Page401 />} />
+          <Route exact path="/404" name="Page 404" element={<Page404 />} />
+          <Route exact path="/500" name="Page 500" element={<Page500 />} />
+          <Route path="*" name="Home" element={<DefaultLayout />} />
+        </Routes>
+      </Suspense>
     </HashRouter>
   )
 }

@@ -49,10 +49,14 @@ const Login = () => {
 
       const { roles, userId } = getUserRole()
       console.log(roles, userId)
-      if (roles.includes('Admin')) {
+      if (roles.includes('admin')) {
         navigate('/dashboard')
-      } else if (roles.includes('Driver')) {
+      } else if (roles.includes('driver')) {
         navigate('/dashboard')
+        localStorage.setItem('access_token', accessToken)
+        localStorage.setItem('refresh_token', refreshToken)
+
+        console.log('access_token', accessToken)
       } else {
         navigate('/login')
       }

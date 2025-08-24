@@ -42,7 +42,7 @@ const AppSidebar = () => {
         <CSidebarBrand to="/" className="text-decoration-none">
           {/* <CIcon customClassName="sidebar-brand-full" icon={logo} height={32} />
           <CIcon customClassName="sidebar-brand-narrow" icon={sygnet} height={32} /> */}
-          <img style={{height:'32px', width:'180px',borderRadius: '5px' ,marginLeft:'15px'}} src="/src/assets/brand/Scrap.png"/>
+          <img style={{height:'40px', width:'180px',borderRadius: '5px' ,marginLeft:'15px'}} src="/src/assets/brand/Dairylogi.png"/>
         </CSidebarBrand>
         <CCloseButton
           className="d-lg-none"

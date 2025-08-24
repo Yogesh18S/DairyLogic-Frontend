@@ -25,7 +25,6 @@ import {
 import React, { useContext, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { NavLink } from 'react-router-dom'
-import { FranchiseContext } from '../context/FranchiseContext'
 import { getUserRole } from '../helper/getUserRole'
 import { AppHeaderDropdown } from './header/index'
 import { AppBreadcrumb } from './index'
@@ -37,7 +36,7 @@ const AppHeader = () => {
   const dispatch = useDispatch()
   const sidebarShow = useSelector((state) => state.sidebarShow)
   const loading = useSelector((state) => state.loading) // Get loading state from Redux
-  const { franchise } = useContext(FranchiseContext);
+
   const {roles} = getUserRole();
 
   return (
