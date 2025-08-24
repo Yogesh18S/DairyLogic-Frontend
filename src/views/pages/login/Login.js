@@ -17,62 +17,53 @@ import axios from 'axios'
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { getErrorMessage } from '../../../axiosErrorUtils.js'
-import { FRANCHISE_ID_LS_KEY, FRANCHISE_NAME } from '../../../constants/globalConstants.js'
 import { getUserRole } from '../../../helper/getUserRole.js'
-import franchiseServices from '../../../services/franchiseServices.js'
 
 const Login = () => {
+  const navigate = useNavigate()
 
-  const navigate = useNavigate();
+  const [userName, setUserName] = useState('')
+  const [password, setPassword] = useState('')
+  const [error, setError] = useState(null)
+  const [loading, setLoading] = useState(false)
 
-  const [userName, setUserName] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(false);
-  
   const handleLogin = async (e) => {
-
-    e.preventDefault();
-    setLoading(true);
-    setError(null);
+    e.preventDefault()
+    setLoading(true)
+    setError(null)
 
     try {
       // Send login request to the backend using the base URL from environment variables
       // const response = await axios.post(`${process.env.VITE_APP_API_BASE_URL}/Identity/PasswordLogin`, { email, password });
-      const response = await axios.post('https://localhost:7097/api/Identity/PasswordLogin', { userNameOrMobile: userName, password });
+      const response = await axios.post('https://localhost:7097/api/Identity/PasswordLogin', {
+        userNameOrMobile: userName,
+        password,
+      })
 
       // Extract access token and refresh token from response
-      const { accessToken, refreshToken } = response.data.result;
+      const { accessToken, refreshToken } = response.data.result
 
       // Store tokens in localStorage (or sessionStorage based on your needs)
-      localStorage.setItem('access_token', accessToken);
-      localStorage.setItem('refresh_token', refreshToken);
+      localStorage.setItem('access_token', accessToken)
+      localStorage.setItem('refresh_token', refreshToken)
 
-      const {roles,userId} =  getUserRole()
-
-      if(roles.includes("Admin")){
+      const { roles, userId } = getUserRole()
+      console.log(roles, userId)
+      if (roles.includes('Admin')) {
         navigate('/dashboard')
-      }
-      else if(roles.includes("FranchiseAdmin")){
-        const franchiseResponse = await franchiseServices.getFranchiseByUserId(userId);
-        const franchise = franchiseResponse.data.result;
-
-      localStorage.setItem(FRANCHISE_ID_LS_KEY,franchise.id);
-      localStorage.setItem(FRANCHISE_NAME,franchise.name);
-
-      navigate('/dashboard')
-      }
-      else{
+      } else if (roles.includes('Driver')) {
+        navigate('/dashboard')
+      } else {
         navigate('/login')
       }
     } catch (error) {
-      const errorMessage = getErrorMessage(error);
+      const errorMessage = getErrorMessage(error)
       console.log(error)
-      setError(errorMessage);
+      setError(errorMessage)
     } finally {
-      setLoading(false);
+      setLoading(false)
     }
-  };
+  }
 
   return (
     <div className="bg-body-tertiary min-vh-100 d-flex flex-row align-items-center">
@@ -93,7 +84,8 @@ const Login = () => {
                         placeholder="Username or Mobile"
                         autoComplete="username"
                         value={userName}
-                        onChange={(e) => setUserName(e.target.value)} />
+                        onChange={(e) => setUserName(e.target.value)}
+                      />
                     </CInputGroup>
                     <CInputGroup className="mb-4">
                       <CInputGroupText>
@@ -103,8 +95,8 @@ const Login = () => {
                         type="password"
                         placeholder="Password"
                         autoComplete="current-password"
-                        value={password} 
-                        onChange={(e) => setPassword(e.target.value)} 
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
                       />
                     </CInputGroup>
                     <CRow>

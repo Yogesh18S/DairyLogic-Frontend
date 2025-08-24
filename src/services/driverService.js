@@ -13,7 +13,7 @@ const driverService = {
   },
 
   createDriver: (driver) => {
-    return axiosInstance.post('/Driver/Post', driver)
+    return axiosInstance.post('/Driver', driver)
   },
 
   updateDriver: (id, driver) => {

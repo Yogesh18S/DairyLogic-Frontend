@@ -31,6 +31,9 @@ const dailyVehicleLoadedService = {
   UpdateStatusByAdmin: (data) => {
     return axiosInstance.post(`/DailyVehicleLoad/UpdateStatus`, data)
   },
+  GetPersonCalendar: (data) => {
+    return axiosInstance.post(`/DailyVehicleLoad/GetPersonCalendar`, data)
+  },
 }
 
 export default dailyVehicleLoadedService
