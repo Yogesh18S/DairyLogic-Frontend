@@ -1,4 +1,17 @@
-import { cilDrop, cilInbox, cilSpeedometer, cilTruck, cilUser } from '@coreui/icons'
+import {
+  cilSpeedometer,
+  cilUser,
+  cilCalendar,
+  cilCarAlt,
+  cilMap,
+  cilArrowCircleRight,
+  cilHistory,
+  cilTag,
+  cilPeople,
+  cilDescription,
+  cilRecycle,
+  cilBug,
+} from '@coreui/icons'
 import CIcon from '@coreui/icons-react'
 import { CNavItem, CNavTitle } from '@coreui/react'
 import { getUserRole } from './helper/getUserRole'
@@ -19,25 +32,25 @@ const fullMenu = [
     component: CNavItem,
     name: 'Animal',
     to: '/Animal-List',
-    icon: <CIcon icon={cilTruck} customClassName="nav-icon" />,
+    icon: <CIcon icon={cilBug} customClassName="nav-icon" />,
   },
   {
     component: CNavItem,
     name: 'Vehicle',
     to: '/vehicle',
-    icon: <CIcon icon={cilDrop} customClassName="nav-icon" />,
+    icon: <CIcon icon={cilCarAlt} customClassName="nav-icon" />,
   },
   {
     component: CNavItem,
     name: 'Route',
     to: '/route',
-    icon: <CIcon icon={cilDrop} customClassName="nav-icon" />,
+    icon: <CIcon icon={cilMap} customClassName="nav-icon" />,
   },
   {
     component: CNavItem,
     name: 'Product',
     to: '/product',
-    icon: <CIcon icon={cilUser} customClassName="nav-icon" />,
+    icon: <CIcon icon={cilTag} customClassName="nav-icon" />,
   },
   {
     component: CNavItem,
@@ -49,7 +62,7 @@ const fullMenu = [
     component: CNavItem,
     name: 'Customers',
     to: '/Customer',
-    icon: <CIcon icon={cilDrop} customClassName="nav-icon" />,
+    icon: <CIcon icon={cilPeople} customClassName="nav-icon" />,
   },
 
   {
@@ -60,7 +73,7 @@ const fullMenu = [
     component: CNavItem,
     name: 'Daily VehicleLoad',
     to: '/daily-vehicle-load',
-    icon: <CIcon icon={cilUser} customClassName="nav-icon" />,
+    icon: <CIcon icon={cilHistory} customClassName="nav-icon" />,
   },
   {
     component: CNavItem,
@@ -68,13 +81,19 @@ const fullMenu = [
     to: '/driver-detail',
     icon: <CIcon icon={cilUser} customClassName="nav-icon" />,
   },
-
   {
     component: CNavItem,
     name: 'Delivery Sequence',
     to: '/delivery-sequence',
-    icon: <CIcon icon={cilUser} customClassName="nav-icon" />,
+    icon: <CIcon icon={cilArrowCircleRight} customClassName="nav-icon" />,
   },
+  {
+    component: CNavItem,
+    name: 'Calendar',
+    to: '/person-calendar',
+    icon: <CIcon icon={cilCalendar} customClassName="nav-icon" />,
+  },
+
   {
     component: CNavItem,
     name: 'Delivery Details',
@@ -85,13 +104,13 @@ const fullMenu = [
     component: CNavItem,
     name: 'Invoice',
     to: '/invoice',
-    icon: <CIcon icon={cilDrop} customClassName="nav-icon" />,
+    icon: <CIcon icon={cilDescription} customClassName="nav-icon" />,
   },
   {
     component: CNavItem,
     name: 'ReproductionCycle',
     to: '/reproductionCycle',
-    icon: <CIcon icon={cilUser} customClassName="nav-icon" />,
+    icon: <CIcon icon={cilRecycle} customClassName="nav-icon" />,
   },
 ]
 

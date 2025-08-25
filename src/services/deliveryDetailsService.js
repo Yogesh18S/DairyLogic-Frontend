@@ -34,6 +34,11 @@ const deliveryDetailsService = {
   deleteDeliveryDetails: (id) => {
     return axiosInstance.delete(`/DeliveryDetails/${id}`)
   },
+  searchRouteData: (routeId, customerId, month, year) => {
+    return axiosInstance.get(
+      `/DeliveryDetails/GetPersonCalendar?routeId=${routeId}&customerId=${customerId}&month=${month}&year=${year}`,
+    )
+  },
 }
 
 export default deliveryDetailsService

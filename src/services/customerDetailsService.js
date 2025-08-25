@@ -30,6 +30,10 @@ const customerDetailsService = {
   updateDeliveryOrder: (customerSequenceList) => {
     return axiosInstance.put('/CustomerDetails/UpdateDeliveryOrder', customerSequenceList)
   },
+
+  // GetCustomerByRoute: (routeId) => {
+  //   return axiosInstance.get(`/CustomerDetails/GetCustomerByRoute/${routeId}`)
+  // },
 }
 
 export default customerDetailsService

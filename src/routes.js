@@ -21,7 +21,7 @@ const ReproductionCycle = React.lazy(() => import('./views/Reproduction/Reproduc
 const Invoice = React.lazy(() => import('./views/Invoice/InvoiceList.js'))
 const TransactionHistory = React.lazy(() => import('./views/Customer/Transactionhistory.js'))
 const InvoiceGenerate = React.lazy(() => import('./views/Invoice/InvoiceGenerate.js'))
-
+const personCalendar = React.lazy(() => import('./views/Calendar/personCalendar.js'))
 const routes = [
   { path: '/', exact: true, name: 'Home' },
   { path: '/dashboard', name: 'Dashboard', element: Dashboard },
@@ -40,6 +40,7 @@ const routes = [
   { path: '/Invoice', name: 'Invoice', element: Invoice },
   { path: '/transaction-history/:id', name: 'TransactionHistory', element: TransactionHistory },
   { path: '/invoice/genrate-invoice', name: 'InvoiceGenerate', element: InvoiceGenerate },
+  { path: '/person-calendar', name: 'Person Calendar', element: personCalendar },
 ]
 
 export default routes

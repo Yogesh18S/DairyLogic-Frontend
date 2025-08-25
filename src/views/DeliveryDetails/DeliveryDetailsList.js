@@ -98,9 +98,6 @@ const DeliveryDetailsList = () => {
           </CAlert>
         )}
         <CCard>
-          {/* <CCardHeader className="d-flex align-items-center justify-content-between">
-            <strong>Delivery Details</strong>
-          </CCardHeader> */}
           <CCardHeader className="d-flex align-items-center justify-content-between">
             <strong>Delivery Details</strong>
 
