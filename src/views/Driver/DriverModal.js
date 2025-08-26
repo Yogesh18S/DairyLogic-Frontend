@@ -14,7 +14,7 @@ const DriverModal = ({ visible, onClose, onSave, formData, setFormData, editMode
     const { name, value } = e.target
     setFormData((prevState) => ({ ...prevState, [name]: value }))
   }
-
+  console.log(formData)
   const handleCheckboxChange = (e) => {
     const { name, checked } = e.target
     setFormData((prevState) => ({ ...prevState, [name]: checked }))
@@ -47,17 +47,17 @@ const DriverModal = ({ visible, onClose, onSave, formData, setFormData, editMode
             <CFormLabel>Address</CFormLabel>
             <CFormInput name="address" value={formData.address} onChange={handleChange} />
           </div>
-          {!editMode && (
-            <div className="mb-3">
-              <CFormLabel>Password</CFormLabel>
-              <CFormInput
-                name="password"
-                type="password"
-                value={formData.password}
-                onChange={handleChange}
-              />
-            </div>
-          )}
+
+          <div className="mb-3">
+            <CFormLabel>Password</CFormLabel>
+            <CFormInput
+              name="password"
+              type="password"
+              value={formData.password}
+              onChange={handleChange}
+            />
+          </div>
+
           <div className="mb-3 form-check">
             <input
               type="checkbox"

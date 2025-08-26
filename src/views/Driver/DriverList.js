@@ -68,6 +68,7 @@ const DriverList = () => {
 
   const handleEdit = (id) => {
     const itemToEdit = data.find((item) => item.id === id)
+    console.log(itemToEdit)
     const isActiveBool = itemToEdit.isActive === 'Active'
     setFormData({ ...itemToEdit, isActive: isActiveBool, password: '' })
     setEditMode(true)

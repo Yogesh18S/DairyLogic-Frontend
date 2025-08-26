@@ -17,7 +17,7 @@ const driverService = {
   },
 
   updateDriver: (id, driver) => {
-    return axiosInstance.put(`/Driver?id=${id}`, driver)
+    return axiosInstance.put(`/Driver/${id}`, driver)
   },
 
   deleteDriver: (id) => {

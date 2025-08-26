@@ -51,20 +51,20 @@ const TransactionHistory = () => {
         <CTable striped hover>
           <CTableHead>
             <CTableRow>
+              <CTableHeaderCell>Transaction No</CTableHeaderCell>
               <CTableHeaderCell>Date</CTableHeaderCell>
               <CTableHeaderCell>Amount</CTableHeaderCell>
               <CTableHeaderCell>Method</CTableHeaderCell>
-              <CTableHeaderCell>Status</CTableHeaderCell>
             </CTableRow>
           </CTableHead>
           <CTableBody>
             {transactions.length > 0 ? (
               transactions.map((tx, index) => (
                 <CTableRow key={tx.id}>
-                  <CTableDataCell>{tx.paymentDate}</CTableDataCell>
-                  <CTableDataCell>{tx.amountPaid}</CTableDataCell>
-                  <CTableDataCell>{tx.paymentType}</CTableDataCell>
-                  <CTableDataCell>{tx.status}</CTableDataCell>
+                  <CTableDataCell>{tx.transactionNo}</CTableDataCell>
+                  <CTableDataCell>{tx.transactionDate}</CTableDataCell>
+                  <CTableDataCell>{tx.transactionAmount}</CTableDataCell>
+                  <CTableDataCell>{tx.type}</CTableDataCell>
                 </CTableRow>
               ))
             ) : (
