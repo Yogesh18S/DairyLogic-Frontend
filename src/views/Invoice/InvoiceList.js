@@ -17,11 +17,6 @@ import {
   CTableRow,
   CTableHeaderCell,
   CTableDataCell,
-  CModal,
-  CModalHeader,
-  CModalTitle,
-  CModalBody,
-  CModalFooter,
 } from '@coreui/react'
 import { useNavigate } from 'react-router-dom'
 import { ITEMS_PER_PAGE } from '../../constants/globalConstants'
@@ -99,9 +94,6 @@ const InvoiceList = () => {
   // 🔹 Handle Payment Submit
   const handlePaySubmit = async () => {
     try {
-      // API call for payment
-      console.log(payAmount)
-      // await invoiceTransactionService.invoicePayment(payAmount)
       fetchData()
       setVisible(false)
     } catch (err) {

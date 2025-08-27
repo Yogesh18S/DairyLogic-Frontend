@@ -21,7 +21,7 @@ const dailyVehicleLoadedService = {
   },
 
   updateDailyVehicleLoaded: (id, data) => {
-    return axiosInstance.put(`/DailyVehicleLoad?id=${id}`, data)
+    return axiosInstance.put(`/DailyVehicleLoad/${id}`, data)
   },
 
   deleteDailyVehicleLoaded: (id) => {

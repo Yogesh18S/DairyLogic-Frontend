@@ -36,7 +36,7 @@ const routes = [
   { path: '/daily-vehicle-load', name: 'Daily Vehicle Load', element: DailyVehicleLoaded },
   { path: '/product', name: 'Product', element: Product },
   { path: '/create-customer', name: 'Create Customer', element: CreateCustomer },
-  { path: '/reproductionCycle', name: 'ReproductionCycle', element: ReproductionCycle },
+  { path: '/reproductionCycle', name: 'Reproduction Cycle', element: ReproductionCycle },
   { path: '/Invoice', name: 'Invoice', element: Invoice },
   { path: '/transaction-history/:id', name: 'TransactionHistory', element: TransactionHistory },
   { path: '/invoice/genrate-invoice', name: 'InvoiceGenerate', element: InvoiceGenerate },

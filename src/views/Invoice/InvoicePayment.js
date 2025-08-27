@@ -25,31 +25,13 @@ const InvoicePayment = ({ visible, onClose, invoice, onSubmit }) => {
 
   if (!invoice) return null
 
-  // const handleSubmit = async () => {
-  //   const payload = {
-  //     invoiceId: invoice.id,
-  //     customerId: invoice.customerId,
-  //     amountPaid: parseFloat(payAmount),
-  //     billNumber,
-  //     remarks,
-  //     paymentType,
-  //     paymentDate: new Date().toISOString().split('T')[0], // today's date
-  //   }
-  //   console.log(payload)
-  //   await invoiceTransactionService.invoicePayment(payload)
-  //   onSubmit(payload)
-  //   setPayAmount('')
-  //   setBillNumber('')
-  //   setRemarks('')
-  //   setPaymentType('Cash')
-  // }
   const handleSubmit = async () => {
     const payload = {
       invoiceId: invoice?.id ?? null,
       customerId: invoice?.customerId ?? null,
       amountPaid: parseFloat(payAmount) || 0, // avoid NaN
-      billNumber: billNumber?.trim() || null,
-      remarks: remarks?.trim() || null,
+      billNumber: billNumber?.trim() || '',
+      remarks: remarks?.trim() || '',
       paymentType: paymentType || 'Cash',
       paymentDate: new Date().toISOString().split('T')[0], // today's date
     }
@@ -65,6 +47,7 @@ const InvoicePayment = ({ visible, onClose, invoice, onSubmit }) => {
       setBillNumber('')
       setRemarks('')
       setPaymentType('Cash')
+      onClose()
     } catch (error) {
       console.error('Error saving payment:', error)
     }

@@ -99,7 +99,8 @@ const dailyVehicleLoadList = () => {
   const handleSave = async () => {
     try {
       if (editMode) {
-        await dailyVehicleLoadService.updateDailyVehicleLoad(formData.id, formData)
+        console.log('Updating data', formData)
+        await dailyVehicleLoadService.updateDailyVehicleLoaded(formData.id, formData)
       } else {
         await dailyVehicleLoadService.createDailyVehicleLoaded(formData)
       }

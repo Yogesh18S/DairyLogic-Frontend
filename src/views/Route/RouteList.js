@@ -33,11 +33,14 @@ const RouteList = () => {
   const fetchData = async () => {
     try {
       const response = await routeService.getPaginatedRoutes(currentPage, ITEMS_PER_PAGE)
+      console.log(response.data.result)
       const formattedData = response.data.result.map((route) => ({
         ...route,
         isActive: route.isActive ? 'Active' : 'Inactive',
       }))
+
       setData(formattedData)
+
       setTotalRecords(response.data.pagedListMetadata.totalRecords)
     } catch (error) {
       console.error('API request failed', error)
@@ -114,7 +117,6 @@ const RouteList = () => {
               columns={[
                 { label: 'Name', accessor: 'name' },
                 { label: 'Description', accessor: 'description' },
-                { label: 'Status', accessor: 'isActive' },
               ]}
               data={data}
               currentPage={currentPage}
