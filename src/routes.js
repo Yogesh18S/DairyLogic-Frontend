@@ -1,4 +1,3 @@
-import { element } from 'prop-types'
 import React from 'react'
 
 const Dashboard = React.lazy(() => import('./views/dashboard/Dashboard'))
@@ -22,6 +21,9 @@ const Invoice = React.lazy(() => import('./views/Invoice/InvoiceList.js'))
 const TransactionHistory = React.lazy(() => import('./views/Customer/Transactionhistory.js'))
 const InvoiceGenerate = React.lazy(() => import('./views/Invoice/InvoiceGenerate.js'))
 const personCalendar = React.lazy(() => import('./views/Calendar/personCalendar.js'))
+const SpecialRequestList = React.lazy(() => import('./views/Special-Request/SpecialRequestList.js'))
+const CreateSpecialRequest = React.lazy(() => import('./views/Special-Request/CreateSpecialRequest.js'))
+
 const routes = [
   { path: '/', exact: true, name: 'Home' },
   { path: '/dashboard', name: 'Dashboard', element: Dashboard },
@@ -41,6 +43,8 @@ const routes = [
   { path: '/transaction-history/:id', name: 'TransactionHistory', element: TransactionHistory },
   { path: '/invoice/genrate-invoice', name: 'InvoiceGenerate', element: InvoiceGenerate },
   { path: '/person-calendar', name: 'Person Calendar', element: personCalendar },
+  { path: '/special-request', name: 'Special Request', element: SpecialRequestList },
+  { path: '/special-request/create', name: 'Create Special Request', element: CreateSpecialRequest }
 ]
 
 export default routes

@@ -5,6 +5,10 @@ const driverDetailsService = {
     return axiosInstance.get(`/DriverDetails/?PageNumber=${page}&PageSize=${size}`)
   },
 
+  getAllDrivers: ()=>{
+    return axiosInstance.get('/Driver/GetAll')
+  },
+
   getDriverDetailsById: (id) => {
     return axiosInstance.get(`/DriverDetails/${id}`)
   },
