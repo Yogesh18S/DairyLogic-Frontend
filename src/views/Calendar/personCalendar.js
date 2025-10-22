@@ -118,7 +118,6 @@ const PersonCalendar = () => {
           <CCardHeader className="d-flex align-items-center justify-content-between">
             <strong>Person Calendar</strong>
             <div className="d-flex gap-2">
-              {/* Route Select */}
               <CFormSelect
                 size="md"
                 className="w-100"
@@ -189,6 +188,7 @@ const PersonCalendar = () => {
             </div>
           </CCardHeader>
           <CCardBody>
+             <div className="table-responsive-sm">
             <CTable bordered hover responsive>
               <CTableHead>
                 <CTableRow>
@@ -215,6 +215,7 @@ const PersonCalendar = () => {
                 )}
               </CTableBody>
             </CTable>
+            </div>
             {deliveryDetails.length > 0 && (
               <div className="mt-3 fw-bold">
                 <p>Total Quantity: {totalQuantity} (L)</p>

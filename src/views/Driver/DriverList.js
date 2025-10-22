@@ -124,6 +124,7 @@ const DriverList = () => {
             </CButton>
           </CCardHeader>
           <CCardBody>
+           <div className="table-responsive">
             <AppPaginatedTable
               columns={[
                 { label: 'First Name', accessor: 'firstName' },
@@ -143,6 +144,7 @@ const DriverList = () => {
                 { label: 'Delete', onClick: handleDelete },
               ]}
             />
+            </div>
           </CCardBody>
         </CCard>
       </CCol>

@@ -145,6 +145,7 @@ const DeliveryDetailsList = () => {
           </CCardHeader>
 
           <CCardBody>
+           <div className="table-responsive">
             <AppPaginatedTable
               columns={[
                 { label: 'Customer Name', accessor: 'deliveryDate' },
@@ -160,6 +161,7 @@ const DeliveryDetailsList = () => {
               onPageChange={setCurrentPage}
               actionButtons={[{ label: 'Edit', onClick: handleEdit }]}
             />
+            </div>
           </CCardBody>
         </CCard>
       </CCol>

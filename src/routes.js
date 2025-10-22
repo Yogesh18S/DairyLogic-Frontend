@@ -26,7 +26,7 @@ const routes = [
   { path: '/', exact: true, name: 'Home' },
   { path: '/dashboard', name: 'Dashboard', element: Dashboard },
   { path: '/animal-list', name: 'Animal', element: Animal },
-  { path: '/Customer', name: 'Customer', element: Customer },
+  { path: '/customer', name: 'Customer', element: Customer },
   { path: '/driver', name: 'Driver', element: Driver },
   { path: '/route', name: 'Route', element: Route },
   { path: '/vehicle', name: 'Vehicle', element: Vehicle },

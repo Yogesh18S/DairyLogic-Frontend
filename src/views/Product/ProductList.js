@@ -122,6 +122,7 @@ const ProductList = () => {
             </CButton>
           </CCardHeader>
           <CCardBody>
+           <div className="table-responsive">
             <AppPaginatedTable
               columns={[
                 { label: 'Name', accessor: 'name' },
@@ -139,9 +140,9 @@ const ProductList = () => {
                 { label: 'Delete', onClick: handleDelete },
               ]}
             />
+            </div>
           </CCardBody>
         </CCard>
-
         <ProductModal
           visible={modalVisible}
           onClose={() => setModalVisible(false)}

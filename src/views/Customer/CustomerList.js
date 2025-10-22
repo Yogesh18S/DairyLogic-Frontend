@@ -112,7 +112,7 @@ const CustomerList = () => {
   if (loading) return <AppLoadingSpinner />
 
   return (
-    <CRow>
+    <CRow className="gy-3">
       <CCol xs={12}>
         {error && (
           <CAlert color="danger" dismissible>
@@ -120,8 +120,8 @@ const CustomerList = () => {
             <p>{error}</p>
           </CAlert>
         )}
-        <CCard>
-          <CCardHeader>
+        <CCard className="shadow-sm border-0">
+          <CCardHeader className="d-flex flex-wrap align-items-center justify-content-between gap-3">
             <div className="d-flex flex-column flex-md-row align-items-center justify-content-between w-100 gap-2">
               <strong className="mb-2 mb-md-0">Customers</strong>
 
@@ -148,7 +148,8 @@ const CustomerList = () => {
             </div>
           </CCardHeader>
 
-          <CCardBody>
+          <CCardBody className="p-2 p-md-3">
+          <div className="table-responsive">
             <AppPaginatedTable
               columns={[
                 { label: 'Name', accessor: 'firstName' },
@@ -171,6 +172,7 @@ const CustomerList = () => {
                 },
               ]}
             />
+            </div>
           </CCardBody>
         </CCard>
       </CCol>

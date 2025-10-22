@@ -7,14 +7,35 @@ import {
   CModal,
   CModalBody,
   CModalHeader,
-  CModalTitle
+  CModalTitle,
+  CAlert,
 } from '@coreui/react'
 
+import { useState } from 'react'
 const AnimalModal = ({ visible, onClose, onSave, formData, setFormData, editMode }) => {
-
+  const [errors, setErrors] = useState({})
   const handleChange = (e) => {
     const { name, value } = e.target
     setFormData((prevState) => ({ ...prevState, [name]: value }))
+  setErrors((prev) => ({ ...prev, [name]: '' }))
+  }
+
+   const validate = () => {
+    const newErrors = {}
+
+    if (!formData.tagNumber?.trim()) {
+      newErrors.tagNumber = 'Tag number is required'
+    } else if (!/^[A-Za-z0-9-]+$/.test(formData.tagNumber)) {
+      newErrors.tagNumber = 'Tag number must be alphanumeric (letters, numbers, or hyphens)'
+    }
+    setErrors(newErrors)
+    return Object.keys(newErrors).length === 0
+  }
+  
+  const handleSave = () => {
+    if (validate()) {
+      onSave()
+    }
   }
 
   return (
@@ -27,6 +48,7 @@ const AnimalModal = ({ visible, onClose, onSave, formData, setFormData, editMode
           <div className="mb-3">
             <CFormLabel>Tag Number</CFormLabel>
             <CFormInput name="tagNumber" value={formData.tagNumber} onChange={handleChange} />
+             {errors.tagNumber && <CAlert color="danger" className="mt-2 py-1">{errors.tagNumber}</CAlert>}
           </div>
           <div className="mb-3">
             <CFormLabel>Name</CFormLabel>
@@ -38,7 +60,7 @@ const AnimalModal = ({ visible, onClose, onSave, formData, setFormData, editMode
           </div>
           <div className="mb-3">
             <CFormLabel>Date of Birth</CFormLabel>
-            <CFormInput name="dateOfBirth" value={formData.dateOfBirth} onChange={handleChange} type="date" />
+            <CFormInput name="dateOfBirth" value={formData.dateOfBirth || ""} onChange={handleChange} type="date" />
           </div>
           <div className="mb-3">
             <CFormLabel>Status</CFormLabel>
@@ -52,7 +74,7 @@ const AnimalModal = ({ visible, onClose, onSave, formData, setFormData, editMode
           <CButton color="secondary" onClick={onClose}>
             Cancel
           </CButton>
-          <CButton color="primary" onClick={onSave}>
+          <CButton color="primary" onClick={onSave}  onClick={handleSave} className="flex-grow-1 flex-md-grow-0">
             Save
           </CButton>
         </div>

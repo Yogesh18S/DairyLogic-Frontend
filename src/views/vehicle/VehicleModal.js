@@ -8,8 +8,9 @@ import {
   CModalFooter,
   CModalHeader,
   CModalTitle,
+  CAlert,
 } from '@coreui/react'
-
+import { useState } from 'react'
 const VehicleModal = ({ visible, onClose, onSave, formData, setFormData, editMode }) => {
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target
@@ -18,7 +19,25 @@ const VehicleModal = ({ visible, onClose, onSave, formData, setFormData, editMod
       [name]: type === 'checkbox' ? checked : value,
     }))
   }
+  const [errors, setErrors] = useState({})
+  const validate = () => {
+    const newErrors = {}
 
+    if (!formData.vehicleNo?.trim()) {
+      newErrors.vehicleNo = 'Vehicle number is required'
+    } else if (!/^[A-Za-z0-9-]+$/.test(formData.vehicleNo)) {
+      newErrors.vehicleNo = 'Vehicle number must be alphanumeric (letters, numbers, or hyphens only)'
+    }
+
+    setErrors(newErrors)
+    return Object.keys(newErrors).length === 0
+  }
+
+  const handleSave = () => {
+    if (validate()) {
+      onSave()
+    }
+  }
   return (
     <CModal visible={visible} onClose={onClose}>
       <CModalHeader>
@@ -33,6 +52,11 @@ const VehicleModal = ({ visible, onClose, onSave, formData, setFormData, editMod
             onChange={handleChange}
             required
           />
+             {errors.vehicleNo && (
+              <CAlert color="danger" className="mt-2 py-1">
+                {errors.vehicleNo}
+              </CAlert>
+            )}
           <CFormSwitch
             label="Active"
             name="isActive"
@@ -45,7 +69,7 @@ const VehicleModal = ({ visible, onClose, onSave, formData, setFormData, editMod
         <CButton color="secondary" onClick={onClose}>
           Cancel
         </CButton>
-        <CButton color="primary" onClick={onSave}>
+        <CButton color="primary" onClick={onSave} onClick={handleSave} className="flex-grow-1 flex-md-grow-0">
           {editMode ? 'Update' : 'Save'}
         </CButton>
       </CModalFooter>

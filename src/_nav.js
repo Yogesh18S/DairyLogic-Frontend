@@ -61,7 +61,7 @@ const fullMenu = [
   {
     component: CNavItem,
     name: 'Customers',
-    to: '/Customer',
+    to: '/customer',
     icon: <CIcon icon={cilPeople} customClassName="nav-icon" />,
   },
 

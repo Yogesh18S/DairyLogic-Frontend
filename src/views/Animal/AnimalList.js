@@ -76,10 +76,13 @@ const AnimalList = () => {
 
   const handleSave = async () => {
     try {
+        const payload = {
+      ...formData,
+      dateOfBirth: formData.dateOfBirth ? formData.dateOfBirth : null}
       if (editMode) {
-        await animalService.updateAnimal(formData.id, formData)
+        await animalService.updateAnimal(formData.id, payload)
       } else {
-        await animalService.createAnimal(formData)
+        await animalService.createAnimal(payload)
       }
       setModalVisible(false)
       fetchData()
@@ -104,14 +107,15 @@ const AnimalList = () => {
             <p>{error}</p>
           </CAlert>
         )}
-        <CCard>
+        <CCard  className="shadow-sm border-0">
           <CCardHeader className="d-flex align-items-center justify-content-between">
             <strong>Animals</strong>
             <CButton color="primary" onClick={handleCreateNew}>
               Create New
             </CButton>
           </CCardHeader>
-          <CCardBody>
+          <CCardBody  className="p-2 p-md-3">
+           <div className="table-responsive">
             <AppPaginatedTable
               columns={[
                 { label: 'Tag Number', accessor: 'tagNumber' },
@@ -130,6 +134,7 @@ const AnimalList = () => {
                 { label: 'Delete', onClick: handleDelete },
               ]}
             />
+            </div>
           </CCardBody>
         </CCard>
       </CCol>

@@ -113,6 +113,7 @@ const RouteList = () => {
             </CButton>
           </CCardHeader>
           <CCardBody>
+           <div className="table-responsive">
             <AppPaginatedTable
               columns={[
                 { label: 'Name', accessor: 'name' },
@@ -128,6 +129,7 @@ const RouteList = () => {
                 { label: 'Delete', onClick: handleDelete },
               ]}
             />
+            </div>
           </CCardBody>
         </CCard>
       </CCol>

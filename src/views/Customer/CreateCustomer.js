@@ -11,6 +11,7 @@ import {
   CCardBody,
   CCardHeader,
   CFormSelect,
+  CAlert,
 } from '@coreui/react'
 import { useNavigate, useParams } from 'react-router-dom'
 import routeService from '../../services/routeService'
@@ -26,12 +27,12 @@ const CreateCustomer = () => {
     city: '',
     state: '',
     zipCode: '',
-    latitude: '',
-    longitude: '',
+    latitude: null,
+    longitude: null,
     milkType: 'Cow',
     quantityLiter: '',
-    startDate: '',
-    endDate: '',
+    startDate: null,
+    endDate: null,
     deliveryDaysMon: true,
     deliveryDaysTue: true,
     deliveryDaysWed: true,
@@ -46,15 +47,10 @@ const CreateCustomer = () => {
     isDeleted: false,
   })
 
+  const [errors, setErrors] = useState({})
   const [routes, setRoutes] = useState([])
   const navigate = useNavigate()
 
-  //  useEffect(() => {
-  //     fetchRoutes();
-  //     if (id) fetchCustomer(id);
-  //   }, [id]);
-
-  console.log(id)
   useEffect(() => {
     if (id) {
       fetchCustomer(id)
@@ -74,6 +70,10 @@ const CreateCustomer = () => {
       console.error('Error fetching routes:', error)
     }
   }
+
+  useEffect(() => {
+    fetchRoutes()
+  }, [])
 
   const fetchCustomer = async (customerId) => {
     console.log(customerId)
@@ -101,10 +101,12 @@ const CreateCustomer = () => {
       ...prev,
       [name]: type === 'checkbox' ? checked : value.trim(),
     }))
+     setErrors((prev) => ({ ...prev, [name]: '' })) 
   }
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+      if (!validateForm()) return
     try {
       if (id) {
         await customerDetailsService.updateCustomer(id, formData)
@@ -113,11 +115,31 @@ const CreateCustomer = () => {
         await customerDetailsService.createCustomer(formData)
         alert('Customer created successfully!')
       }
-      navigate('/customers')
+      navigate('/customer')
     } catch (error) {
       console.error('Error saving customer:', error)
       alert('Failed to save customer')
     }
+  }
+
+   const validateForm = () => {
+    const newErrors = {}
+
+    if (!formData.firstName.trim()) newErrors.firstName = 'First Name is required'
+
+    if (!formData.quantityLiter || formData.quantityLiter <= 0) {
+      newErrors.quantityLiter = 'Quantity must be greater than 0'
+    }
+    if (!formData.price || formData.price <= 0)
+      newErrors.price = 'Price is required and must be greater than 0'
+    if (!formData.addressLine1.trim()) newErrors.addressLine1 = 'Address Line 1 is required'
+
+    if (!formData.routeId) newErrors.routeId = 'Route is required'
+
+    if (!formData.city.trim()) newErrors.city = 'City is required'
+
+    setErrors(newErrors)
+    return Object.keys(newErrors).length === 0
   }
 
   return (
@@ -137,6 +159,7 @@ const CreateCustomer = () => {
                 onChange={handleChange}
                 required
               />
+               {errors.firstName && <CAlert color="danger" className="py-1 mt-1">{errors.firstName}</CAlert>}
             </CCol>
             <CCol md={6}>
               <CFormLabel>Last Name</CFormLabel>
@@ -166,6 +189,7 @@ const CreateCustomer = () => {
                 value={formData.quantityLiter}
                 onChange={handleChange}
               />
+               {errors.quantityLiter && <CAlert color="danger" className="py-1 mt-1">{errors.quantityLiter}</CAlert>}
             </CCol>
             <CCol md={6}>
               <CFormLabel>Price</CFormLabel>
@@ -175,6 +199,7 @@ const CreateCustomer = () => {
                 value={formData.price}
                 onChange={handleChange}
               />
+               {errors.price && <small className="text-danger">{errors.price}</small>}
             </CCol>
           </CRow>
 
@@ -187,6 +212,7 @@ const CreateCustomer = () => {
                 value={formData.addressLine1}
                 onChange={handleChange}
               />
+               {errors.addressLine1 && <CAlert color="danger" className="py-1 mt-1">{errors.addressLine1}</CAlert>}
             </CCol>
             <CCol md={6}>
               <CFormLabel>Address Line 2</CFormLabel>
@@ -203,6 +229,7 @@ const CreateCustomer = () => {
             <CCol md={4}>
               <CFormLabel>City</CFormLabel>
               <CFormInput name="city" value={formData.city} onChange={handleChange} />
+               {errors.city && <CAlert color="danger" className="py-1 mt-1">{errors.city}</CAlert>}
             </CCol>
             <CCol md={4}>
               <CFormLabel>State</CFormLabel>
@@ -279,6 +306,7 @@ const CreateCustomer = () => {
                   </option>
                 ))}
               </CFormSelect>
+              {errors.routeId && <CAlert color="danger" className="py-1 mt-1">{errors.routeId}</CAlert>}
             </CCol>
             <CCol md={6}>
               <CFormLabel>Delivery Order</CFormLabel>
@@ -291,7 +319,7 @@ const CreateCustomer = () => {
             </CCol>
           </CRow>
 
-          <CButton color="success" type="submit">
+          <CButton color="primary" type="submit">
             {id ? 'Update' : 'Submit'}
           </CButton>
         </CForm>

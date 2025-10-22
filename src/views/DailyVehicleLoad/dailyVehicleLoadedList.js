@@ -156,6 +156,7 @@ const dailyVehicleLoadList = () => {
             </CButton>
           </CCardHeader>
           <CCardBody>
+           <div className="table-responsive">
             <AppPaginatedTable
               columns={[
                 { label: 'Vehicle No', accessor: 'vehicleNo' },
@@ -176,6 +177,7 @@ const dailyVehicleLoadList = () => {
                 { label: 'Update Load Status', onClick: (row) => UpdateLoadedStatus(row) },
               ]}
             />
+            </div>
           </CCardBody>
         </CCard>
       </CCol>
