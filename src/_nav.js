@@ -1,16 +1,16 @@
 import {
-  cilSpeedometer,
-  cilUser,
+  cilArrowCircleRight,
+  cilBug,
   cilCalendar,
   cilCarAlt,
-  cilMap,
-  cilArrowCircleRight,
-  cilHistory,
-  cilTag,
-  cilPeople,
   cilDescription,
+  cilHistory,
+  cilMap,
+  cilPeople,
   cilRecycle,
-  cilBug,
+  cilSpeedometer,
+  cilTag,
+  cilUser,
 } from '@coreui/icons'
 import CIcon from '@coreui/icons-react'
 import { CNavItem, CNavTitle } from '@coreui/react'
@@ -110,6 +110,12 @@ const fullMenu = [
     component: CNavItem,
     name: 'ReproductionCycle',
     to: '/reproductionCycle',
+    icon: <CIcon icon={cilRecycle} customClassName="nav-icon" />,
+  },
+  {
+    component: CNavItem,
+    name: 'SpecialRequest',
+    to: '/special-request',
     icon: <CIcon icon={cilRecycle} customClassName="nav-icon" />,
   },
 ]

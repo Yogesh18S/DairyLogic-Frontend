@@ -1,0 +1,40 @@
+# Node.js dependencies
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Build output
+dist/
+build/
+.next/
+out/
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Logs
+logs
+*.log
+*.log.*
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# IDE/editor specific
+.vscode/
+.idea/
+*.swp
+.DS_Store
+*.sublime-project
+*.sublime-workspace
+
+# Optional cache
+.cache/
+.parcel-cache/
+coverage/
+node_modules
