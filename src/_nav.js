@@ -90,7 +90,7 @@ const fullMenu = [
   },
   {
     component: CNavItem,
-    name: 'SpecialRequest',
+    name: 'Request Orders',
     to: '/special-request',
     icon: <CIcon icon={cilEnvelopeOpen} customClassName="nav-icon" />,
   },

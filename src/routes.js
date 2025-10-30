@@ -43,7 +43,7 @@ const routes = [
   { path: '/transaction-history/:id', name: 'TransactionHistory', element: TransactionHistory },
   { path: '/invoice/genrate-invoice', name: 'InvoiceGenerate', element: InvoiceGenerate },
   { path: '/person-calendar', name: 'Person Calendar', element: personCalendar },
-  { path: '/special-request', name: 'Special Request', element: SpecialRequestList },
+  { path: '/special-request', name: 'Request Orders', element: SpecialRequestList },
   { path: '/special-request/create', name: 'Create Special Request', element: CreateSpecialRequest },
   { path: '/create-customer/edit/:id', name: 'Edit Customer', element: CreateCustomer },
 

@@ -3,14 +3,14 @@ import { Fragment, useEffect, useState } from 'react'
 import specialRequestServices from '../../services/specialRequestServices'
 import AddItems from './AddItems'
 import FindCustomerInfo from './FindCustomerInfo'
-
+import { useNavigate } from 'react-router-dom'
 const CreateSpecialRequest = () => {
   const [customerInfo, setCustomerInfo] = useState(null)
   const [customerId, setCustomerId] = useState(null) // TODO: change it with customerUserId
   const [customerFound, setCustomerFound] = useState(false)
   const [requestItems, setRequestItems] = useState([])
   const [finalPayload, setFinalPayload] = useState(null)
-
+  const navigate = useNavigate()
   // const franchiseId = localStorage.getItem('franchise_id')
   const [specialRequest, setSpecialRequest] = useState({
     customerId: null,
@@ -89,6 +89,7 @@ const CreateSpecialRequest = () => {
     if (response.status === 200) {
       alert('Quotation created successfully!')
     }
+    navigate('/special-request')
   } catch (error) {
     console.error('Error creating quotation:', error)
     alert('Failed to create quotation.')

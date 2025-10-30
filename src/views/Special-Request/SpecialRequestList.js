@@ -90,7 +90,7 @@ const handlePay = async (rowData) => {
             )}
         <CCard>
           <CCardHeader className="d-flex align-items-center justify-content-between">
-            <strong>Special Request</strong>
+            <strong>Request Orders</strong>
             <CButton color="primary" className="float-end" onClick={handleCreate}>Create Request</CButton>
           </CCardHeader>
           <CCardBody>
