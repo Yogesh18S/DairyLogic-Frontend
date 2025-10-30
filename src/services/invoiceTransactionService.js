@@ -5,7 +5,7 @@ const invoiceTransactionService = {
     return axiosInstance.post('/InvoicePayments', pay)
   },
   specialRequestinvoice: (pay) => {
-    return axiosInstance.post('/InvoicePayments/CreateSpecialRequest', pay)
+    return axiosInstance.post('/InvoicePayments/CreateSpecialRequestPayment', pay)
   },
   customerHistoryPayments: (page, size, customerId) => {
     return axiosInstance.get(

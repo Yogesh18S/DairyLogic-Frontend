@@ -17,6 +17,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import routeService from '../../services/routeService'
 import customerDetailsService from '../../services/customerDetailsService'
 const CreateCustomer = () => {
+  const [loading, setLoading] = useState(false)
   const { id } = useParams()
   const [formData, setFormData] = useState({
     firstName: '',
@@ -53,6 +54,7 @@ const CreateCustomer = () => {
 
   useEffect(() => {
     if (id) {
+      console.log('Edit mode for id:', id)
       fetchCustomer(id)
     }
   }, [id])
@@ -76,16 +78,16 @@ const CreateCustomer = () => {
   }, [])
 
   const fetchCustomer = async (customerId) => {
-    console.log(customerId)
     try {
       setLoading(true)
-      const { data } = await customerDetailsService.getCustomerById(customerId)
-      console.log(data)
-      if (data) {
+      const response = await customerDetailsService.getCustomerById(customerId)
+      const customer = response.data.result
+      console.log('Fetched customer data:', customer)
+      if (customer) {
         setFormData((prev) => ({
           ...prev,
-          ...data,
-          routeId: data.routeId || '',
+          ...customer,
+          routeId: customer.routeId || '',
         }))
       }
     } catch (error) {

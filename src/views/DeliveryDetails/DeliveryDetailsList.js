@@ -15,7 +15,7 @@ import AppLoadingSpinner from '../../components/AppLoadingSpinner'
 import AppPaginatedTable from '../../components/table/AppPaginatedTable'
 import { ITEMS_PER_PAGE } from '../../constants/globalConstants'
 import deliveryDetailsService from '../../services/deliveryDetailsService'
-
+import DeliveryDetailsModal from './DeliveryDetailsModal'
 const DeliveryDetailsList = () => {
   const [data, setData] = useState([])
   const [currentPage, setCurrentPage] = useState(1)
@@ -60,20 +60,39 @@ const DeliveryDetailsList = () => {
     }
   }
 
+  // const handleEdit = (id) => {
+  //   const itemToEdit = data.find((item) => item.id === id)
+  //   setFormData(itemToEdit)
+  //   setEditMode(true)
+  //   setModalVisible(true)
+  // }
+
   const handleEdit = (id) => {
-    const itemToEdit = data.find((item) => item.id === id)
-    setFormData(itemToEdit)
-    setEditMode(true)
-    setModalVisible(true)
+  const itemToEdit = data.find((item) => item.id === id)
+  console.log('Edit clicked for id:', id, itemToEdit)
+  if (!itemToEdit) {
+    console.error(`Item with ID ${id} not found`)
+    return
   }
+
+  setFormData({
+    id: itemToEdit.id,
+    deliveryDate: itemToEdit.deliveryDate || '',
+    deliveryAddress: itemToEdit.deliveryAddress || '',
+    status: itemToEdit.status || '',
+    customerName: itemToEdit.customerName || '',
+    quantity: itemToEdit.quantity || '',
+    routeName: itemToEdit.routeName || '',
+  })
+  setEditMode(true)
+  setModalVisible(true)
+}
 
   const handleSave = async () => {
     try {
-      if (editMode) {
+   
         await deliveryDetailsService.updateDeliveryDetails(formData.id, formData)
-      } else {
-        await deliveryDetailsService.createDeliveryDetails(formData)
-      }
+    
       setModalVisible(false)
       fetchData()
     } catch (error) {
@@ -148,7 +167,7 @@ const DeliveryDetailsList = () => {
            <div className="table-responsive">
             <AppPaginatedTable
               columns={[
-                { label: 'Customer Name', accessor: 'deliveryDate' },
+                { label: 'Customer Name', accessor: 'customerName' },
                 { label: 'Quantity (Liter)', accessor: 'quantity' },
                 { label: 'Status', accessor: 'status' },
                 { label: 'DeliverySequence', accessor: 'deliverySequence' },
@@ -159,12 +178,20 @@ const DeliveryDetailsList = () => {
               itemsPerPage={ITEMS_PER_PAGE}
               totalRecords={totalRecords}
               onPageChange={setCurrentPage}
-              actionButtons={[{ label: 'Edit', onClick: handleEdit }]}
+              actionButtons={[{ label: 'Edit',  onClick: (row) => handleEdit(row),}]}
             />
             </div>
           </CCardBody>
         </CCard>
       </CCol>
+    <DeliveryDetailsModal
+      visible={modalVisible}
+      onClose={() => setModalVisible(false)}
+      onSave={handleSave}
+      formData={formData}
+      setFormData={setFormData}
+      editMode={editMode}
+    />
     </CRow>
   )
 }

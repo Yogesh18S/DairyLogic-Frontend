@@ -1,8 +1,14 @@
 import axiosInstance from '../axiosInstance'
 
 const dashboardService = {
-  getOrderCount: (franchiseId) => {
-    return axiosInstance.get(`/Dashboard/GetOrderStats?franchiseId=${franchiseId}`)
+  getOrderCount: () => {
+    return axiosInstance.get(`/Dashboard/GetOrderStats`)
+  },
+  getAnimalTracker: () => {
+    return axiosInstance.get(`/Dashboard/GetAnimaltrack`)
+  },
+  getSpecialRequests: () => {
+    return axiosInstance.get(`/Dashboard/GetSpecialTrack`)
   },
 }
 export default dashboardService

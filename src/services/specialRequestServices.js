@@ -13,6 +13,9 @@ const specialRequestServices = {
     },
     postSpecialRequest: (payload)=>{
         return axiosInstance.post('/SpecialRequest',payload)
+    },
+    getSpecialRequestById: (id)=>{
+        return axiosInstance.get(`/SpecialRequest/${id}`)
     }
 }
 

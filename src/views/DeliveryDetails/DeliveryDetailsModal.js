@@ -18,35 +18,28 @@ const DeliveryDetailsModal = ({ visible, onClose, onSave, formData, setFormData,
     }))
   }
 
+  console.log('Modal formData:', formData)
   return (
     <CModal visible={visible} onClose={onClose}>
       <CModalHeader>
         <CModalTitle>{editMode ? 'Edit Delivery Details' : 'Add Delivery Details'}</CModalTitle>
       </CModalHeader>
       <CModalBody>
+
+        <div className="mb-3">
+            <strong>Customer Name:</strong>{' '}
+            <span>{formData.customerName || 'N/A'}</span>
+          </div>
+          
         <CForm>
           <CFormInput
-            label="Delivery Date"
-            type="date"
-            name="deliveryDate"
-            value={formData.deliveryDate}
+            label="Quantity"
+            name="quantity"
+            value={formData.quantity || ''}
             onChange={handleChange}
             required
           />
-          <CFormInput
-            label="Delivery Address"
-            name="deliveryAddress"
-            value={formData.deliveryAddress}
-            onChange={handleChange}
-            required
-          />
-          <CFormInput
-            label="Status"
-            name="status"
-            value={formData.status}
-            onChange={handleChange}
-            required
-          />
+       
         </CForm>
       </CModalBody>
       <CModalFooter>

@@ -27,7 +27,7 @@ const CreateSpecialRequest = React.lazy(() => import('./views/Special-Request/Cr
 const routes = [
   { path: '/', exact: true, name: 'Home' },
   { path: '/dashboard', name: 'Dashboard', element: Dashboard },
-  { path: '/animal-list', name: 'Animal', element: Animal },
+  { path: '/animal', name: 'Animal', element: Animal },
   { path: '/customer', name: 'Customer', element: Customer },
   { path: '/driver', name: 'Driver', element: Driver },
   { path: '/route', name: 'Route', element: Route },
@@ -39,12 +39,14 @@ const routes = [
   { path: '/product', name: 'Product', element: Product },
   { path: '/create-customer', name: 'Create Customer', element: CreateCustomer },
   { path: '/reproductionCycle', name: 'Reproduction Cycle', element: ReproductionCycle },
-  { path: '/Invoice', name: 'Invoice', element: Invoice },
+  { path: '/invoice', name: 'Invoice', element: Invoice },
   { path: '/transaction-history/:id', name: 'TransactionHistory', element: TransactionHistory },
   { path: '/invoice/genrate-invoice', name: 'InvoiceGenerate', element: InvoiceGenerate },
   { path: '/person-calendar', name: 'Person Calendar', element: personCalendar },
   { path: '/special-request', name: 'Special Request', element: SpecialRequestList },
-  { path: '/special-request/create', name: 'Create Special Request', element: CreateSpecialRequest }
+  { path: '/special-request/create', name: 'Create Special Request', element: CreateSpecialRequest },
+  { path: '/create-customer/edit/:id', name: 'Edit Customer', element: CreateCustomer },
+
 ]
 
 export default routes

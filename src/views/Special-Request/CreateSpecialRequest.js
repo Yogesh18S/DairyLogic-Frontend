@@ -9,12 +9,15 @@ const CreateSpecialRequest = () => {
   const [customerId, setCustomerId] = useState(null) // TODO: change it with customerUserId
   const [customerFound, setCustomerFound] = useState(false)
   const [requestItems, setRequestItems] = useState([])
+  const [finalPayload, setFinalPayload] = useState(null)
 
   // const franchiseId = localStorage.getItem('franchise_id')
   const [specialRequest, setSpecialRequest] = useState({
     customerId: null,
+    driverId: 0,
     totalPrice: '',
     deliveryDate: '',
+    requestDate: '',
     paid: '',
   })
 
@@ -48,30 +51,49 @@ const CreateSpecialRequest = () => {
     //Todo : Calculate realTime Items Price and display
   }
 
+  // const handleCreateCustomerQuotation = async () => {
+  //   const requestData = {
+  //     customerId: specialRequest.customerId,
+  //     driverId: Number(specialRequest.driverId),
+  //     deliveryDate: specialRequest.deliveryDate,
+  //     totalPrice: specialRequest.totalPrice,
+  //     items: requestItems.map((item) => ({
+  //       productId: item.productId,
+  //       quantity: item.quantity,
+  //       price: item.price,
+  //     })),
+  //   }
+
+  //   try {
+  //     const response = await specialRequestServices.postSpecialRequest(requestData)
+  //     if (response.status === 200) {
+  //       alert('quotation created Succussefully')
+  //     }
+
+  //     //Todo: Implement automatic Pdf Generation and send Email to Corresponding User
+  //   } catch (error) {
+  //     console.error('error creating quotaion', error)
+  //     alert('failed to created quotation')
+  //   }
+  // }
+
   const handleCreateCustomerQuotation = async () => {
-    const requestData = {
-      customerId: specialRequest.customerId,
-      franchiseId: specialRequest.franchiseId,
-      quoteStatus: specialRequest.quoteStatus,
-      items: requestItems.map((item) => ({
-        productId: item.productId,
-        quantity: item.quantity,
-        price: item.price,
-      })),
-    }
-
-    try {
-      const response = await specialRequestServices.postSpecialRequest(requestData)
-      if (response.status === 200) {
-        alert('quotation created Succussefully')
-      }
-
-      //Todo: Implement automatic Pdf Generation and send Email to Corresponding User
-    } catch (error) {
-      console.error('error creating quotaion', error)
-      alert('failed to created quotation')
-    }
+    console.log('Final Payload:', finalPayload)
+  if (!finalPayload || !finalPayload.customerId) {
+    alert('Please fill all required details before submitting.')
+    return
   }
+
+  try {
+    const response = await specialRequestServices.postSpecialRequest(finalPayload)
+    if (response.status === 200) {
+      alert('Quotation created successfully!')
+    }
+  } catch (error) {
+    console.error('Error creating quotation:', error)
+    alert('Failed to create quotation.')
+  }
+}
 
   return (
     <Fragment>
@@ -86,7 +108,7 @@ const CreateSpecialRequest = () => {
 
       <CRow className="mb-2">
         <CCol xs={12}>
-          {customerFound && <AddItems onItemsChange={handleItemsChange} />}
+          {customerFound && <AddItems customerId={customerId} onPayloadChange={setFinalPayload} />}
 
           {!customerFound && (
             <CCard>

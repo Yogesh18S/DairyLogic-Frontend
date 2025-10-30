@@ -5,11 +5,12 @@ const deliveryDetailsService = {
   //   return axiosInstance.get(`/DeliveryDetails/?PageNumber=${page}&PageSize=${size}`)
   // },
   // deliveryDetailsService.js
+  
   getDeliveryDetail: (page, size, filters = {}) => {
-    console.log(filters)
     const { customerName, routeName, status, date } = filters
-
+    
     let query = `/DeliveryDetails/?PageNumber=${page}&PageSize=${size}`
+    console.log(filters)
 
     if (customerName) query += `&customerName=${encodeURIComponent(customerName)}`
     if (routeName) query += `&routeName=${encodeURIComponent(routeName)}`

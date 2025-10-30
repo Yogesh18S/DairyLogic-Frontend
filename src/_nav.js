@@ -11,6 +11,7 @@ import {
   cilSpeedometer,
   cilTag,
   cilUser,
+  cilEnvelopeOpen,
 } from '@coreui/icons'
 import CIcon from '@coreui/icons-react'
 import { CNavItem, CNavTitle } from '@coreui/react'
@@ -31,7 +32,7 @@ const fullMenu = [
   {
     component: CNavItem,
     name: 'Animal',
-    to: '/Animal-List',
+    to: '/animal',
     icon: <CIcon icon={cilBug} customClassName="nav-icon" />,
   },
   {
@@ -89,6 +90,12 @@ const fullMenu = [
   },
   {
     component: CNavItem,
+    name: 'SpecialRequest',
+    to: '/special-request',
+    icon: <CIcon icon={cilEnvelopeOpen} customClassName="nav-icon" />,
+  },
+  {
+    component: CNavItem,
     name: 'Calendar',
     to: '/person-calendar',
     icon: <CIcon icon={cilCalendar} customClassName="nav-icon" />,
@@ -112,12 +119,7 @@ const fullMenu = [
     to: '/reproductionCycle',
     icon: <CIcon icon={cilRecycle} customClassName="nav-icon" />,
   },
-  {
-    component: CNavItem,
-    name: 'SpecialRequest',
-    to: '/special-request',
-    icon: <CIcon icon={cilRecycle} customClassName="nav-icon" />,
-  },
+  
 ]
 
 export const getNavItems = () => {

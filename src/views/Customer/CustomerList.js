@@ -17,6 +17,7 @@ import customerService from '../../services/customerDetailsService'
 import { useNavigate } from 'react-router-dom'
 const CustomerList = () => {
   const [data, setData] = useState([])
+  
   const [currentPage, setCurrentPage] = useState(1)
   const [totalRecords, setTotalRecords] = useState(0)
   const [loading, setLoading] = useState(true)
@@ -41,8 +42,11 @@ const CustomerList = () => {
   }
 
   const handleEdit = (id) => {
+    console.log('Edit clicked for id:', id)
     navigate(`/create-customer/edit/${id}`)
   }
+
+
 
   const fetchData = async (searchText = '') => {
     try {
@@ -164,7 +168,8 @@ const CustomerList = () => {
               totalRecords={totalRecords}
               onPageChange={setCurrentPage}
               actionButtons={[
-                { label: 'Edit', onClick: handleEdit },
+               // { label: 'Edit', onClick: handleEdit },
+                 { label: 'Edit', onClick: (row) => handleEdit(row) },
                 { label: 'Delete', onClick: handleDelete },
                 {
                   label: 'Transaction History',

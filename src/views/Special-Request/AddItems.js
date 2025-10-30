@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import {
   CButton,
   CCard,
@@ -9,13 +8,12 @@ import {
   CTable,
   CTableBody,
   CTableDataCell,
-  CTableRow
+  CTableRow,
 } from '@coreui/react'
 import { useEffect, useState } from 'react'
 import driverDetailsService from '../../services/driverDetailsService'
 import productService from '../../services/productService'
 
-// eslint-disable-next-line react/prop-types
 const AddItems = ({ customerId, onPayloadChange }) => {
   const [items, setItems] = useState([])
   const [drivers, setDrivers] = useState([])
@@ -26,22 +24,22 @@ const AddItems = ({ customerId, onPayloadChange }) => {
   const [price, setPrice] = useState('')
   const [unit, setUnit] = useState('')
   const [deliveryDate, setDeliveryDate] = useState('')
+  const [requestDate, setRequestDate] = useState('')
 
-  // Fetch categories when component mounts
+  // Fetch drivers
   useEffect(() => {
     const fetchDrivers = async () => {
       try {
         const response = await driverDetailsService.getAllDrivers()
-        
         setDrivers(response.data.result)
       } catch (error) {
-        console.error('Error fetching categories:', error)
+        console.error('Error fetching drivers:', error)
       }
     }
     fetchDrivers()
-  }, [customerId])
+  }, [])
 
-  // Fetch products when category changes
+  // Fetch products
   useEffect(() => {
     const fetchProducts = async () => {
       try {
@@ -59,10 +57,10 @@ const AddItems = ({ customerId, onPayloadChange }) => {
     }
   }, [selectedDriverId])
 
-  // Handle product selection to populate default price and unit
+  // Handle product selection
   const handleProductSelection = (productId) => {
     setSelectedProductId(productId)
-    
+
     if (productId) {
       const selectedProduct = products.find((p) => p.id === Number(productId))
       if (selectedProduct) {
@@ -75,6 +73,7 @@ const AddItems = ({ customerId, onPayloadChange }) => {
     }
   }
 
+  // Handle add item
   const handleAddItem = () => {
     if (!selectedProductId || !quantity || !price) {
       alert('Please select product, enter quantity and price.')
@@ -88,119 +87,112 @@ const AddItems = ({ customerId, onPayloadChange }) => {
       quantity: Number(quantity),
       price: Number(price),
       unit: unit,
-      productName: selectedProduct?.name || 'Unknown'
+      productName: selectedProduct?.name || 'Unknown',
     }
 
-    const updatedItems = [...items, newItem]
-    setItems(updatedItems)
+    const updated = [...items, newItem]
+    setItems(updated)
+  }
 
-    // Build payload
-    const totalPrice = updatedItems.reduce((sum, i) => sum + i.quantity * i.price, 0)
+  // Whenever items, driver, date, or customerId changes — update payload to parent
+  useEffect(() => {
+    const totalPrice = items.reduce((sum, i) => sum + i.quantity * i.price, 0)
+
     const payload = {
       customerId,
       totalPrice,
-      deliveryDate: deliveryDate ? new Date(deliveryDate).toISOString() : null,
+      driverId: selectedDriverId ? Number(selectedDriverId) : 0,
+      requestDate: requestDate ? new Date(requestDate).toISOString().split('T')[0] : null,
       paid: 0,
-      items: updatedItems.map(i => ({
+      items: items.map((i) => ({
         productId: i.productId,
         quantity: i.quantity,
-        price: i.price
-      }))
+        price: i.price,
+      })),
     }
 
+    console.log('📤 Sending Payload to Parent:', payload)
     onPayloadChange(payload)
-
-    // Clear inputs
-    setSelectedProductId('')
-    setQuantity('')
-    setPrice('')
-    setUnit('')
-  }
+  }, [items, selectedDriverId, requestDate, customerId])
 
   return (
-    <>
     <CCard>
-      <CCardHeader><strong>Special Request Items</strong></CCardHeader>
-        <CCardBody>
-          <div className="d-flex gap-2 mb-3">
-            <CFormInput
-              type="date"
-              value={deliveryDate}
-              onChange={(e) => setDeliveryDate(e.target.value)}
-            />
-            <CFormSelect
-              value={selectedDriverId}
-              onChange={(e) => setSelectedDriverId(e.target.value)}
-              >
-              <option value="">Select Driver</option>
-              {drivers.map((driver) => (
-                <option key={driver.id} value={driver.id}>{driver.firstName} {driver.lastName}</option>
-              ))}
-            </CFormSelect>
-            </div>
-        
+      <CCardHeader>
+        <strong>Special Request Items</strong>
+      </CCardHeader>
+      <CCardBody>
+        <div className="d-flex gap-2 mb-3">
+          <CFormInput
+            type="date"
+            value={requestDate}
+            onChange={(e) => setRequestDate(e.target.value)}
+          />
+          <CFormSelect
+            value={selectedDriverId}
+            onChange={(e) => setSelectedDriverId(e.target.value)}
+          >
+            <option value="">Select Driver</option>
+            {drivers.map((driver) => (
+              <option key={driver.id} value={driver.id}>
+                {driver.firstName} {driver.lastName}
+              </option>
+            ))}
+          </CFormSelect>
+        </div>
 
         <CTable bordered>
           <CTableBody>
-            <CTableRow xs={12}>
-
-            <CTableDataCell>
-              <CFormSelect
-                value={selectedProductId}
-                onChange={(e) => handleProductSelection(e.target.value)}
-                disabled={!products.length}
+            <CTableRow>
+              <CTableDataCell>
+                <CFormSelect
+                  value={selectedProductId}
+                  onChange={(e) => handleProductSelection(e.target.value)}
+                  disabled={!products.length}
                 >
-                <option value="">Select Product</option>
-                {products.map((p) => (
-                  <option key={p.id} value={p.id}>{p.name}</option>
-                ))}
-              </CFormSelect>
-            </CTableDataCell>
+                  <option value="">Select Product</option>
+                  {products.map((p) => (
+                    <option key={p.id} value={p.id}>
+                      {p.name}
+                    </option>
+                  ))}
+                </CFormSelect>
+              </CTableDataCell>
 
-            <CTableDataCell>
-              <CFormInput
-                type="number"
-                placeholder="Quantity"
-                value={quantity}
-                onChange={(e) => setQuantity(e.target.value)}
-                />
-            </CTableDataCell>
-            
-            <CTableDataCell>
-              <div className="d-flex align-items-center gap-2">
+              <CTableDataCell>
                 <CFormInput
                   type="number"
-                  placeholder="Price"
-                  value={price}
-                  onChange={(e) => setPrice(e.target.value)}
-                  style={{ flex: 1 }}
+                  placeholder="Quantity"
+                  value={quantity}
+                  onChange={(e) => setQuantity(e.target.value)}
                 />
-                {unit && (
-                  <span className="text-muted small">({unit})</span>
-                )}
-              </div>
-            </CTableDataCell>
+              </CTableDataCell>
 
-            <CTableDataCell>
-              <CButton color="primary" onClick={handleAddItem}>Add Item</CButton>
-            </CTableDataCell>
+              <CTableDataCell>
+                <div className="d-flex align-items-center gap-2">
+                  <CFormInput
+                    type="number"
+                    placeholder="Price"
+                    value={price}
+                    onChange={(e) => setPrice(e.target.value)}
+                    style={{ flex: 1 }}
+                  />
+                  {unit && <span className="text-muted small">({unit})</span>}
+                </div>
+              </CTableDataCell>
+
+              <CTableDataCell>
+                <CButton color="primary" onClick={handleAddItem}>
+                  Add Item
+                </CButton>
+              </CTableDataCell>
             </CTableRow>
-         
-       
-    
-        {/* Show added items */}
-        
+
             {items.map((item, index) => (
               <CTableRow key={index}>
                 <CTableDataCell>{item.productName}</CTableDataCell>
                 <CTableDataCell>{item.quantity}</CTableDataCell>
                 <CTableDataCell>
-                  <div className="d-flex align-items-center gap-2">
-                    <span>{item.price}</span>
-                    {item.unit && (
-                      <span className="text-muted small">({item.unit})</span>
-                    )}
-                  </div>
+                  {item.price} {item.unit && <span className="text-muted small">({item.unit})</span>}
                 </CTableDataCell>
                 <CTableDataCell>{item.quantity * item.price}</CTableDataCell>
                 <CTableDataCell>
@@ -209,14 +201,6 @@ const AddItems = ({ customerId, onPayloadChange }) => {
                     onClick={() => {
                       const updated = items.filter((_, i) => i !== index)
                       setItems(updated)
-                      const totalPrice = updated.reduce((sum, i) => sum + i.quantity * i.price, 0)
-                      onPayloadChange({
-                        customerId,
-                        totalPrice,
-                        deliveryDate: deliveryDate ? new Date(deliveryDate).toISOString() : null,
-                        paid: 0,
-                        items: updated
-                      })
                     }}
                   >
                     Remove
@@ -224,12 +208,11 @@ const AddItems = ({ customerId, onPayloadChange }) => {
                 </CTableDataCell>
               </CTableRow>
             ))}
-         </CTableBody>
+          </CTableBody>
         </CTable>
-        </CCardBody>
-        </CCard>
-  </>
+      </CCardBody>
+    </CCard>
   )
 }
 
-export default AddItems;
+export default AddItems

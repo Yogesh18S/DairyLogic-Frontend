@@ -27,21 +27,25 @@ const InvoicePayment = ({ visible, onClose, invoice, onSubmit }) => {
 
   const handleSubmit = async () => {
     const payload = {
-      invoiceId: invoice?.id ?? null,
+      invoiceId: invoice?.invoiceId ?? null,
       customerId: invoice?.customerId ?? null,
       amountPaid: parseFloat(payAmount) || 0, // avoid NaN
       billNumber: billNumber?.trim() || '',
       remarks: remarks?.trim() || '',
       paymentType: paymentType || 'Cash',
+      specialRequestId: invoice?.isSpecialRequest ,     
       paymentDate: new Date().toISOString().split('T')[0], // today's date
     }
 
-    console.log(payload)
-
     try {
-      await invoiceTransactionService.invoicePayment(payload)
-      onSubmit(payload)
+          // await invoiceTransactionService.invoicePayment(payload)
+        if (invoice.isSpecialRequest || invoice.specialRequestId) {
+        await invoiceTransactionService.specialRequestinvoice(payload)
+      } else {
+        await invoiceTransactionService.invoicePayment(payload)
+      }
 
+      onSubmit(payload)
       // reset fields
       setPayAmount('')
       setBillNumber('')

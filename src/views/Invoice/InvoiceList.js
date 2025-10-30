@@ -55,6 +55,7 @@ const InvoiceList = () => {
         toDate: filters.toDate,
       })
       const result = response.data.result
+      console.log('Fetched invoices:', result)
       setData(result)
       console.log(result.length)
       setTotalRecords(result.length)
